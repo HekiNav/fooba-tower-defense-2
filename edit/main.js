@@ -35,6 +35,8 @@ function generateTiles(savedMap) {
     if (savedMap) {
         map = JSON.parse(savedMap)
         enemyPath = map.enemyPath
+        document.getElementById("mapName").value = map.name
+        document.getElementById("mapDifficulty").value = map.difficulty
     }
     localStorage.removeItem("ftdSavedMap")
     const tiles = []
