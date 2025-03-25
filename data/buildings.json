@@ -1,0 +1,68 @@
+[
+    {
+        "name" : "Electric tower",
+        "levels" : [
+            {
+                "img" : {
+                    "animated" : "false",
+                    "source" : {
+                        "url" : "/edit/img/tower1/tower1.png",
+                        "width" : 64,
+                        "height" : 192,
+                        "x" : 0,
+                        "y" : 0
+                    }
+                },
+                "cost" : 50,
+                "stun" : 1000,
+                "reload" : 1000,
+                "range" : 3,
+                "damage" : {
+                    "health" : 25,
+                    "armor" : 10,
+                    "shield" : 5
+                },
+                "armorPiercing" : false,
+                "shielPiercing" : true,
+                "weapon" : {
+                    "turning" : false,
+                    "img" : {
+                        "animated" : "false",
+                        "source" : {
+                            "url" : "/edit/img/tower1/tower1_1w.png",
+                            "width" : 64,
+                            "height" : 64,
+                            "x" : 4,
+                            "y" : 3
+                        }
+                    }
+                },
+                "projectile" : {
+                    "speed" : 50,
+                    "img" : {
+                        "animated" : "false",
+                        "source" : {
+                            "url" : "/edit/img/tower1/tower1_1p.png",
+                            "width" : 32,
+                            "height" : 32,
+                            "x" : 0,
+                            "y" : 0
+                        }
+                    }
+                },
+                "impact" : {
+                    "img" : {
+                        "animated" : "false",
+                        "source" : {
+                            "url" : "/edit/img/tower1/tower1_1i.png",
+                            "width" : 64,
+                            "height" : 64,
+                            "x" : 0,
+                            "y" : 0
+                        }
+                    }
+                }
+            }
+        ]
+    }
+]

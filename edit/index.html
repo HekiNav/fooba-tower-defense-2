@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>FTD 2 Editor</title>
+</head>
+<body>
+    <div id="tiles">
+        <canvas id="tileCanvas"></canvas>
+    </div>
+    <div id="layers">
+        <table class="lock-container">
+        <tr><td><label for="lock">Toolbar position</label></td><td><button id="lock" class="lock"></button></td></tr>
+            
+        </table>
+        <h4>Layers</h4>
+        <div id="layer">
+            <button id="1">Ground</button>
+            <button id="2">Details</button>
+            <button id="3">Buildable tiles</button>
+        </div>
+        <h4>File tools</h4>
+        <button id="save">💾</button>
+        <button id="load">📁</button>
+        <h4>Map Attributes</h4>
+        <label for="mapName">Name</label>
+        <input type="text" name="mapName" id="mapName">
+        <label for="mapDifficulty">Difficulty: Easy</label>
+        <input type="range" name="mapDifficulty" id="mapDifficulty" min="1" max="3" autocomplete="off" value="1">
+    </div>
+    <canvas id="canvas"></canvas>
+    <script type="module" src="main.js"></script>
+</body>
+</html>

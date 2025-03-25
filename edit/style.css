@@ -1,0 +1,135 @@
+#tiles{
+    position: absolute;
+    background-color: #0005;
+    padding: 10px;
+    z-index: 100;
+}
+body{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    overflow: hidden;
+    background-color: #333;
+    margin: 0;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#canvas{
+    background-color: gray;
+    image-rendering:crisp-edges
+}
+#tileCanvas{
+    image-rendering:crisp-edges
+}
+#layers{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: #0005;
+    padding: 1vw;
+    z-index: 101;
+    right: 0;
+    width: 150px;
+}
+#layers div{
+    display: flex;
+    flex-direction: column;
+    background-color: #0000;
+}
+button{
+    border: outset 3px white;
+}
+#save, #load{
+    padding: 1px 4px;
+    display: inline;
+    margin: 2px;
+    cursor: pointer;
+    font-size: 120%;
+    height: 40px;
+    background-color: #fff;
+    border: 0;
+    border-radius: 5px;
+    width: 40px;
+    text-shadow: 1px 1px black;
+}
+.lock-container *{
+
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        --locked-color: #000000;
+        --unlocked-color: #000000;
+}
+.lock {
+    width: 24px;
+    height: 21px;
+    border: 3px solid var(--locked-color);
+    border-radius: 5px;
+    position: relative;
+    cursor: pointer;
+    -webkit-transition: all 0.1s ease-in-out;
+    transition: all 0.1s ease-in-out;
+    background-color: #333;
+  }
+  .lock:after {
+    content: "";
+    display: block;
+    background: var(--locked-color);
+    width: 3px;
+    height: 7px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -3.5px 0 0 -2px;
+    -webkit-transition: all 0.1s ease-in-out;
+    transition: all 0.1s ease-in-out;
+  }
+  .lock:before {
+    content: "";
+    display: block;
+    width: 10px;
+    height: 10px;
+    bottom: 100%;
+    position: absolute;
+    left: 50%;
+    margin-left: -8px;
+    border: 3px solid var(--locked-color);
+    border-top-right-radius: 50%;
+    border-top-left-radius: 50%;
+    border-bottom: 0;
+    -webkit-transition: all 0.1s ease-in-out;
+    transition: all 0.1s ease-in-out;
+  }
+  /* Locked Hover */
+  .lock:hover:before {
+    height: 12px;
+  }
+  /* Unlocked */
+  .unlocked {
+    transform: rotate(10deg);
+  }
+  .unlocked:before {
+    bottom: 130%;
+    left: 31%;
+    margin-left: -11.5px;
+    transform: rotate(-45deg);
+  }
+  .unlocked,
+  .unlocked:before {
+    border-color: var(--unlocked-color);
+  }
+  .unlocked:after {
+    background: var(--unlocked-color);
+  }
+  /* Unlocked Hover */
+  .unlocked:hover {
+    transform: rotate(3deg);
+  }
+  .unlocked:hover:before {
+    height: 10px;
+    left: 40%;
+    bottom: 124%;
+    transform: rotate(-30deg);
+  }
