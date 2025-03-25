@@ -34,6 +34,7 @@ export default class Tileselector{
         });
     }
     selectedTile(){
+        if (!this.tiles.find(t => t.active)) this.tiles[0].active = true
         return this.tiles.find(t => t.active)
     }
     #handleMouseDown(e){

@@ -41,7 +41,7 @@ body{
 button{
     border: outset 3px white;
 }
-#save, #load{
+#save, #load, #path{
     padding: 1px 4px;
     display: inline;
     margin: 2px;
@@ -53,6 +53,15 @@ button{
     border-radius: 5px;
     width: 40px;
     text-shadow: 1px 1px black;
+}
+#path::after{
+  content: "🚶‍➡️";
+}
+#path.active {
+  background-color: #ccc;
+}
+#path.active::after{
+  content: "🏃‍➡️";
 }
 .lock-container *{
 

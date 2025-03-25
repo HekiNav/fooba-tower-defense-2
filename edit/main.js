@@ -16,6 +16,8 @@ let mouse = {
     offset: { x: 0, y: 0 },
     down: false
 }
+let editingEnemyPath = false
+let enemyPath = []
 let layer = 1
 let tileSize = 0
 let tiles = generateTiles(localStorage.getItem("ftdSavedMap"))
@@ -30,18 +32,21 @@ if (!urlParam.height || !urlParam.width) window.location.href = window.location.
 
 function generateTiles(savedMap) {
     let map
-    if (savedMap) map = JSON.parse(savedMap)
-        localStorage.removeItem("ftdSavedMap")
+    if (savedMap) {
+        map = JSON.parse(savedMap)
+        enemyPath = map.enemyPath
+    }
+    localStorage.removeItem("ftdSavedMap")
     const tiles = []
     for (let h = 1; h < 4; h++) {
         for (let i = 0; i < urlParam.height; i++) {
             for (let j = 0; j < urlParam.width; j++) {
                 let imgsrc
                 if (savedMap) {
-                    if (map.tiles[i*urlParam.width+j].building && h == 3) {
-                        imgsrc = map.tiles[i*urlParam.width+j].building == "normal" ? {"url" : "/edit/img/other.png","size" : 64,"x" : 0,"y" : 0,"building" : "normal"} : {"url" : "/edit/img/other.png","size" : 64,"x" : 1,"y" : 0,"building" : "boosted"} 
+                    if (map.tiles[i * urlParam.width + j].building && h == 3) {
+                        imgsrc = map.tiles[i * urlParam.width + j].building == "normal" ? { "url": "/edit/img/other.png", "size": 64, "x": 0, "y": 0, "building": "normal" } : { "url": "/edit/img/other.png", "size": 64, "x": 1, "y": 0, "building": "boosted" }
                     } else {
-                        imgsrc = map.tiles[i*urlParam.width+j].images.find(i => i.layer == h)
+                        imgsrc = map.tiles[i * urlParam.width + j].images.find(i => i.layer == h)
                     }
                 }
                 tiles.push(new Tile(j * tileSize, i * tileSize, tileSize, h, imgsrc))
@@ -74,6 +79,28 @@ async function getFile(filename) {
     const response = await fetch("/edit/data/" + filename)
     return await response.json()
 }
+function renderEnemyPath() {
+    if (!enemyPath.length) return
+    enemyPath.forEach((pos, i) => {
+        const nextPos = enemyPath[i + 1]
+        let color
+        if (i == 0) color = "red"
+        else if (i == enemyPath.length - 1) color = "green"
+        else color = "blue"
+        c.fillStyle = color
+        c.strokeStyle = "blue"
+        if (nextPos) {
+            c.beginPath()
+            c.moveTo(pos.x * tileSize, pos.y * tileSize)
+            c.lineTo(nextPos.x * tileSize, nextPos.y * tileSize)
+            c.stroke()
+        }
+
+        c.beginPath()
+        c.arc(pos.x * tileSize, pos.y * tileSize, tileSize * 0.1, 0, Math.PI * 2)
+        c.fill()
+    });
+}
 function update() {
     const step = 0.1
     const scale = 1
@@ -96,6 +123,7 @@ function update() {
         if (tile.layer <= layer) tile.draw(c)
     })
     if (tileSelector) tileSelector.draw()
+    renderEnemyPath(c, tileSize)
     window.requestAnimationFrame(update)
 }
 document.getElementById("save").addEventListener("mousedown", save)
@@ -117,7 +145,12 @@ function handleMouseMove(e) {
     if (getMouseTile(e) != null) tiles[getMouseTile(e)].hovered = true
 }
 function handleClick(e) {
-    if (getMouseTile(e) != null) tiles[getMouseTile(e)].updateImage(tileSelector.selectedTile().imagesrc)
+    if (getMouseTile(e) != null && !editingEnemyPath) tiles[getMouseTile(e)].updateImage(tileSelector.selectedTile().imagesrc)
+    console.log(getMouseTile(e) != null, editingEnemyPath)
+    if (getMouseTile(e) != null && editingEnemyPath) {
+        let tile = tiles[getMouseTile(e)]
+        enemyPath.push({ x: tile.x / tile.size + 0.5, y: tile.y / tile.size + 0.5 })
+    }
 }
 function handleMouseOut(e) {
     tiles.forEach((tile) => { tile.hovered = false; })
@@ -167,6 +200,7 @@ function save() {
     const file = {
         "name": name,
         "difficulty": difficulty,
+        "enemyPath": enemyPath,
         "width": 16,
         "height": 8,
         "tiles": map
@@ -197,7 +231,14 @@ function load() {
 selectLayer(1)
 update()
 document.querySelector(".lock").addEventListener("click", () => document.querySelector(".lock").classList.toggle("unlocked"))
+
+
 document.getElementById("mapDifficulty").addEventListener("change", e => document.querySelector('label[for="mapDifficulty"]').innerHTML = `Difficulty: ${difficulties[e.target.value - 1]}`)
 document.getElementById("1").addEventListener("click", () => selectLayer(1))
 document.getElementById("2").addEventListener("click", () => selectLayer(2))
 document.getElementById("3").addEventListener("click", () => selectLayer(3))
+
+document.getElementById("path").addEventListener("click", e => {
+    editingEnemyPath = !editingEnemyPath
+    e.target.classList.toggle("active")
+})
