@@ -148,7 +148,6 @@ function handleMouseMove(e) {
 }
 function handleClick(e) {
     if (getMouseTile(e) != null && !editingEnemyPath) tiles[getMouseTile(e)].updateImage(tileSelector.selectedTile().imagesrc)
-    console.log(getMouseTile(e) != null, editingEnemyPath)
     if (getMouseTile(e) != null && editingEnemyPath) {
         let tile = tiles[getMouseTile(e)]
         enemyPath.push({ x: tile.x / tile.size + 0.5, y: tile.y / tile.size + 0.5 })

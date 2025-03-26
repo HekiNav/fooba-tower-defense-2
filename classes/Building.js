@@ -1,14 +1,16 @@
-export default class Building{
+import Sprite from "./Sprite.js"
+
+export default class Building extends Sprite{
     constructor(x, y, source, tileSize){
+        super(x,y,tileSize, tileSize,source)
         this.source = source
-        this.x = x
-        this.y = y
         this.height = this.source.img.source.height / this.source.img.source.width * tileSize
         this.width = tileSize
+        this.x = x
+        this.y = y - this.height + tileSize
         this.projectiles = []
         this.target = null
-        this.image = new Image()
-        this.image.src = source.img.source.url
+        super.updateSize(this.x, this.y, this.width, this.height)
     }
     draw(c){
         c.drawImage(this.image, this.source.img.source.x * this.source.img.source.width, this.source.img.source.y * this.source.img.source.height, this.source.img.source.width, this.source.img.source.height, this.x, this.y, this.width, this.height)
@@ -36,7 +38,7 @@ export default class Building{
         this.size = size
     }
     update(c){ 
-        this.draw(c)
+        super.draw(c)
         /* if (this.target !== undefined && this.frames.current.x === 11 && this.frames.elapsed % 5 === 0) {this.shoot()} */
     }
 }

@@ -119,24 +119,38 @@ function handleClick(e) {
     const activeTile = tiles.find(t => t.selected)
     if (!activeTile || !activeTile.building) return
     buildSideBar(activeTile)
-    buildings.sort((a, b) => {
-        return a.position.y - b.position.y
-    })
 }
 function handleMouseOut(e) {
     tiles.forEach((tile) => { tile.hovered = false; })
 }
 function buildSideBar(activeTile) {
-    const options = buildable.filter(b => b.levels[activeTile.level])
+    let options = buildable.filter(b => b.levels[activeTile.level])
+    const currentBuilding = activeTile.tower ? buildable[Number(activeTile.tower.source.img.source.url.split("/")[2][5])-1] : null
+    if (currentBuilding) {
+        options = options.filter(b => b.name == currentBuilding.name)
+    }
     document.getElementById("sidebar").innerHTML = "TOWERS"
     options.forEach(opt => {
         const element = towerOption(opt, activeTile.level)
         document.getElementById("sidebar").appendChild(element)
 
         const background = Math.floor(Math.random() * previewBackgrounds.length)
-        console.log(previewBackgrounds)
         const image = new TowerPreview(element.querySelector("canvas"), opt.levels[activeTile.level], previewBackgrounds[background])
+        element.querySelector(".topt-build").addEventListener("click", () => {
+            const building = new Building(activeTile.x, activeTile.y, opt.levels[activeTile.level], tileSize)
+            buildings.push(building)
+            activeTile.level ++
+            activeTile.selected = false
+            activeTile.tower = building
+            clearSideBar()
+            buildings.sort((a, b) => {
+                return a.y - b.y
+            })
+        })
         previewImages.push(image)
+        buildings.sort((a, b) => {
+            return a.y - b.y
+        })
     })
 }
 function clearSideBar() {
@@ -171,7 +185,8 @@ function towerOption(tower, level) {
                 <span class="topt-stat" title="Health damage"><img src="./img/icons/hearts.svg" alt="Heath: " class="topt-stat-icon">${t.damage.health}</span>
                 <span class="topt-stat" title="Armor damage"><img src="./img/icons/armor.svg" alt="Armor: " class="topt-stat-icon">${t.damage.armor}</span>
                 <span class="topt-stat" title="Shield damage"><img src="./img/icons/shield.svg"  alt="Shield: " class="topt-stat-icon">${t.damage.shield}</span>
-            </div>`
+            </div>
+            <button class="topt-build">${level == 0 ? "Build" : "Upgrade"}</button>`
 
     return container
 }

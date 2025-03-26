@@ -57,12 +57,13 @@ body{
     padding: 10px;
     color: white;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr 3fr;
+    grid-template-rows: 1fr 0.7fr 1fr 3fr 1fr;
     grid-template-areas: 
     "header header header"
     "desc desc desc"
     "price price piercing"
-    "stats stats2 image";
+    "stats stats2 image"
+    "build build build";
 }
 .topt-header {
     font-size: 30px;
@@ -76,6 +77,7 @@ body{
 .topt-cost {
     display: flex;
     align-items: center;
+    height: min-content;
     font-size: 16px;
     grid-area: price;
 }
@@ -84,6 +86,9 @@ body{
     margin-right: 2px;
 }
 .topt-piercing {
+    display: flex;
+    align-items: center;
+    height: min-content;
     font-size: 14px;
     grid-area: piercing;
 }
@@ -120,4 +125,16 @@ body{
 .topt-stat-icon {
     height: 20px;
     margin-right: 2px;
+}
+.topt-build {
+    grid-area: build;
+    width: 100%;
+    background-color: #00bd42;
+    color: white;
+    font-size: 20px;
+    border: #006122 3px inset;
+}
+.topt-build:active {
+    background-color: #009f38;
+    border: #006122 outset;
 }

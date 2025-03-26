@@ -27,6 +27,6 @@ export default class TowerPreview{
         this.tiles.forEach(tile => {
             tile.draw(this.c)
         });
-        this.building.draw(this.c)
+        this.building.update(this.c)
     }
 }
