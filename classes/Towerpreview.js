@@ -13,13 +13,11 @@ export default class TowerPreview{
         this.canvas.height = this.background.height * this.tileSize
 
         this.building = new PreviewBuilding(this.tileSize, this.tileSize, this.tower, this.tileSize)
-        console.log(this.tiles)
     }
     #generateTiles(cf) {
         const tiles = []
         for (let i = 0; i < cf.length; i++) {
             const tile = cf[i];
-            console.log(tile)
             tiles.push(new Tile(i % this.background.width * this.tileSize, Math.floor(i / this.background.height) * this.tileSize, this.tileSize, tile.images))
         }
         return tiles

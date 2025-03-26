@@ -22,12 +22,18 @@ let previewImages = []
 let tileSize = 10
 const map1 = getFile("maps/bug_bridge.ftdmap.json")
 const bdings = getFile("data/buildings.json")
-const previewBG1 = getFile("maps/tower_preview_background_1.ftdmap.json")
-Promise.all([map1, bdings, previewBG1]).then(([map1, bdings, previewBG1]) => {
+const previewBGs = [
+    getFile("maps/tower_preview_background_1.ftdmap.json"),
+    getFile("maps/tower_preview_background_2.ftdmap.json"),
+    getFile("maps/tower_preview_background_3.ftdmap.json"),
+    getFile("maps/tower_preview_background_4.ftdmap.json"),
+    getFile("maps/tower_preview_background_5.ftdmap.json"),
+]
+Promise.all([map1, bdings, ...previewBGs]).then(([map1, bdings, ...previewBGs]) => {
     tiles = loadTiles(map1.tiles)
     map = map1
     buildable = bdings
-    previewBackgrounds = [previewBG1]
+    previewBackgrounds = previewBGs
     update()
     canvas.addEventListener("mousemove", handleMouseMove)
     canvas.addEventListener("mouseout", handleMouseOut)
@@ -128,6 +134,7 @@ function buildSideBar(activeTile) {
         document.getElementById("sidebar").appendChild(element)
 
         const background = Math.floor(Math.random() * previewBackgrounds.length)
+        console.log(previewBackgrounds)
         const image = new TowerPreview(element.querySelector("canvas"), opt.levels[activeTile.level], previewBackgrounds[background])
         previewImages.push(image)
     })
@@ -137,7 +144,6 @@ function clearSideBar() {
     previewImages = []
 }
 function towerOption(tower, level) {
-    console.log(tower, level)
     const t = tower.levels[level]
     const container = document.createElement("div")
     container.classList.add("tower-option")
