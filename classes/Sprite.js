@@ -4,23 +4,23 @@ export default class Sprite {
         this.y = y
         this.width = width
         this.height = height
-        this.source = image
+        this.imagesource = image
         this.image = new Image()
-        this.image.src = image.img.source.url   
-    }   
+        this.image.src = image.source.url
+    }
     updateSize(x, y, width, height) {
         this.x = x
         this.y = y
         this.width = width
         this.height = height
     }
-    draw(c){
-        if (this.source.img.animated) {
+    draw(c) {
+        if (this.imagesource.animated) {
 
         } else {
-            c.drawImage(this.image, this.source.img.source.x * this.source.img.source.width, this.source.img.source.y * this.source.img.source.height, this.source.img.source.width, this.source.img.source.height, this.x, this.y, this.width, this.height)
+            c.drawImage(this.image, this.imagesource.source.x * this.imagesource.source.width, this.imagesource.source.y * this.imagesource.source.height, this.imagesource.source.width, this.imagesource.source.height, this.x, this.y, this.width, this.height)
         }
-        
+
     }
-    
+
 }

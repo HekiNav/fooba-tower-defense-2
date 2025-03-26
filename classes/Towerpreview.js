@@ -1,7 +1,7 @@
-import PreviewBuilding from "./PreviewBuilding.js"
+import Building from "./Building.js"
 import Tile from "./Tile.js"
 
-export default class TowerPreview{
+export default class TowerPreview {
     constructor(canvas, tower, background) {
         this.canvas = canvas
         this.tower = tower
@@ -11,8 +11,7 @@ export default class TowerPreview{
         this.tiles = this.#generateTiles(this.background.tiles)
         this.canvas.width = this.background.width * this.tileSize
         this.canvas.height = this.background.height * this.tileSize
-
-        this.building = new PreviewBuilding(this.tileSize, this.tileSize, this.tower, this.tileSize)
+        this.building = new Building(this.tileSize, this.tileSize, this.tower, this.tileSize)
     }
     #generateTiles(cf) {
         const tiles = []
@@ -22,7 +21,7 @@ export default class TowerPreview{
         }
         return tiles
     }
-    draw(){
+    draw() {
         this.c.clearRect(0, 0, this.canvas.width, this.canvas.height)
         this.tiles.forEach(tile => {
             tile.draw(this.c)

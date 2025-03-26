@@ -5,6 +5,7 @@ const canvas = document.getElementById("canvas")
 
 const c = canvas.getContext("2d")
 
+const fps = 30;
 
 let mouse = {
     offset: { x: 0, y: 0 },
@@ -97,9 +98,10 @@ function update() {
     previewImages.forEach(img => {
         img.draw()
     })
+    setTimeout(() => {
+        window.requestAnimationFrame(update);
+      }, 1000 / fps);
 
-
-    window.requestAnimationFrame(update)
 }
 
 
