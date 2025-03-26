@@ -29,8 +29,9 @@ export default class Tile {
         this.building = imagesrc.building ? imagesrc.building : null
     }
     draw(c) {
+        const scaleOffset = 1.01
         this.images.forEach(img => {
-            c.drawImage(img.image, img.imagesrc.x * img.imagesrc.size, img.imagesrc.y * img.imagesrc.size, img.imagesrc.size, img.imagesrc.size, this.x, this.y, this.size, this.size)
+            c.drawImage(img.image, img.imagesrc.x * img.imagesrc.size, img.imagesrc.y * img.imagesrc.size, img.imagesrc.size, img.imagesrc.size, this.x - scaleOffset * 0.5, this.y - scaleOffset * 0.5, this.size * scaleOffset, this.size * scaleOffset)
         })
         if (this.selected && this.building) {
             c.strokeStyle = "#0005"

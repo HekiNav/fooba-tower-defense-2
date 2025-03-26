@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   style="height: 512px; width: 512px;"
+   viewBox="0 0 512 512"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="armor-pierce.svg"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1">
+    <inkscape:path-effect
+       effect="powerclip"
+       id="path-effect5"
+       is_visible="true"
+       lpeversion="1"
+       inverse="true"
+       flatten="false"
+       hide_clip="false"
+       message="Use fill-rule evenodd on &lt;b&gt;fill and stroke&lt;/b&gt; dialogue if no flatten result after convert clip to paths." />
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath5">
+      <path
+         id="path5"
+         style="display:none;stroke-width:0.0316986;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke markers fill"
+         d="m 424.07213,134.35573 -289.7164,289.7164 c -0.8793,0.8793 -2.29505,0.8793 -3.17435,10e-6 L 87.927858,380.81861 c -0.879301,-0.8793 -0.879301,-2.29505 0,-3.17435 L 377.64426,87.927858 c 0.8793,-0.879301 2.29505,-0.879301 3.17435,0 l 43.25353,43.253522 c 0.87929,0.8793 0.87929,2.29505 -10e-6,3.17435 z" />
+      <path
+         id="lpe_path-effect5"
+         style="stroke-width:0.0316986;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke markers fill"
+         class="powerclip"
+         d="M 11,51.643 H 501 V 460.358 H 11 Z m 413.07213,82.71273 c 0.8793,-0.8793 0.8793,-2.29505 10e-6,-3.17435 L 380.81861,87.927858 c -0.8793,-0.879301 -2.29505,-0.879301 -3.17435,0 L 87.927858,377.64426 c -0.879301,0.8793 -0.879301,2.29505 0,3.17435 l 43.253522,43.25353 c 0.8793,0.87929 2.29505,0.87929 3.17435,-10e-6 z" />
+    </clipPath>
+  </defs>
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="0.5061614"
+     inkscape:cx="190.65065"
+     inkscape:cy="269.67683"
+     inkscape:window-width="1920"
+     inkscape:window-height="1051"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
+  <path
+     d="m 208,56.643 -16,64 L 93.432,134.725 256,175.365 418.568,134.725 320,120.643 l -16,-64 -27.268,18.18 -12.002,48.003 H 247.27 L 235.268,74.822 Z M 69.379,147.263 16,200.644 l 48,64 25.77,-25.77 26.619,-79.857 z m 373.242,0 -47.01,11.753 26.62,79.857 25.769,25.77 48,-64 z m -308.717,16.132 -20.123,60.369 13.81,55.246 L 247,345.348 V 191.67 Z m 244.192,0 L 265,191.67 v 153.678 l 119.408,-66.338 13.81,-55.246 z M 144,308.715 v 56.314 l 103,30.627 v -29.719 z m 224,0 -103,57.223 v 29.718 l 103,-30.627 z m -224,75.54 v 56.388 l 103,14.714 V 414.88 Z m 224,0 -103,30.625 v 40.478 l 103,-14.714 z"
+     fill="#fff"
+     fill-opacity="1"
+     id="path1"
+     style="height:512px;width:512px;display:inline;fill:#ffffff"
+     clip-path="url(#clipPath5)"
+     inkscape:path-effect="#path-effect5"
+     inkscape:original-d="m 208,56.643 -16,64 L 93.432,134.725 256,175.365 418.568,134.725 320,120.643 l -16,-64 -27.268,18.18 -12.002,48.003 H 247.27 L 235.268,74.822 Z M 69.379,147.263 16,200.644 l 48,64 25.77,-25.77 26.619,-79.857 z m 373.242,0 -47.01,11.753 26.62,79.857 25.769,25.77 48,-64 z m -308.717,16.132 -20.123,60.369 13.81,55.246 L 247,345.348 V 191.67 Z m 244.192,0 L 265,191.67 v 153.678 l 119.408,-66.338 13.81,-55.246 z M 144,308.715 v 56.314 l 103,30.627 v -29.719 z m 224,0 -103,57.223 v 29.718 l 103,-30.627 z m -224,75.54 v 56.388 l 103,14.714 V 414.88 Z m 224,0 -103,30.625 v 40.478 l 103,-14.714 z" />
+  <rect
+     style="fill:#ffffff;stroke-width:0.0282585;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke markers fill"
+     id="rect4-1"
+     width="506.96698"
+     height="39.270691"
+     x="-253.48349"
+     y="-381.67401"
+     ry="2.0010121"
+     transform="rotate(135)" />
+</svg>

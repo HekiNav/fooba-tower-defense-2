@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   style="height: 512px; width: 512px;"
+   viewBox="0 0 512 512"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="shield-pierce.svg"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1">
+    <inkscape:path-effect
+       effect="powerclip"
+       id="path-effect2"
+       is_visible="true"
+       lpeversion="1"
+       inverse="true"
+       flatten="false"
+       hide_clip="false"
+       message="Use fill-rule evenodd on &lt;b&gt;fill and stroke&lt;/b&gt; dialogue if no flatten result after convert clip to paths." />
+    <filter
+       id="mask-powermask-path-effect2_inverse"
+       inkscape:label="filtermask-powermask-path-effect2"
+       style="color-interpolation-filters:sRGB"
+       height="100"
+       width="100"
+       x="-50"
+       y="-50">
+      <feColorMatrix
+         id="mask-powermask-path-effect2_primitive1"
+         values="1"
+         type="saturate"
+         result="fbSourceGraphic" />
+      <feColorMatrix
+         id="mask-powermask-path-effect2_primitive2"
+         values="-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 0 0 0 1 0 "
+         in="fbSourceGraphic" />
+    </filter>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath2">
+      <path
+         id="path2"
+         clip-path="none"
+         style="display:none;stroke-width:0.0316986;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke markers fill"
+         d="m 677.27808,-118.85021 -796.12829,796.12829 c -0.8793,0.8793 -2.29506,0.8793 -3.17435,0 l -43.2535,-43.2535 c -0.87931,-0.8793 -0.87931,-2.29506 0,-3.17436 l 796.12828,-796.12828 c 0.8793,-0.87931 2.29506,-0.87931 3.17436,0 l 43.2535,43.2535 c 0.8793,0.87929 0.8793,2.29505 0,3.17435 z" />
+      <path
+         id="lpe_path-effect2"
+         style="stroke-width:0.0316986;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke markers fill"
+         class="powerclip"
+         d="M 43.905,14.656 H 470.78 V 496.157 H 43.905 Z m 633.37308,-133.50621 c 0.8793,-0.8793 0.8793,-2.29506 0,-3.17435 l -43.2535,-43.2535 c -0.8793,-0.87931 -2.29506,-0.87931 -3.17436,0 l -796.12828,796.12828 c -0.87931,0.8793 -0.87931,2.29506 0,3.17436 l 43.2535,43.2535 c 0.87929,0.8793 2.29505,0.8793 3.17435,0 z" />
+    </clipPath>
+  </defs>
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="0.71582031"
+     inkscape:cx="324.80218"
+     inkscape:cy="243.77626"
+     inkscape:window-width="1920"
+     inkscape:window-height="1051"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
+  <path
+     d="m 48.906,19.656 v 10.782 c 0,103.173 10.53,206.07 41.313,289.53 30.78,83.463 82.763,148.094 164.53,170.563 l 2.188,0.626 2.25,-0.5 C 348.873,471.537 401.509,406.629 430.374,322.313 459.239,237.998 465.78,133.657 465.78,30.438 v -10.78 l -10.655,1.53 C 323.26,39.954 191.452,40 59.595,21.188 l -10.69,-1.53 z M 67.75,41.03 c 63.242,8.536 126.495,12.792 189.75,12.782 v 184.532 h 174.78 c -4.905,27.572 -11.31,53.747 -19.592,77.937 -27.348,79.884 -73.757,137.33 -155.157,155.564 -0.008,-0.003 -0.02,0.003 -0.03,0 v -233.5 H 86.53 C 73.66,177.355 68.253,109.535 67.75,41.032 Z"
+     fill="#fff"
+     fill-opacity="1"
+     id="path1"
+     style="display:inline;fill:#ffffff"
+     clip-path="url(#clipPath2)"
+     inkscape:path-effect="#path-effect2"
+     inkscape:original-d="m 48.906,19.656 v 10.782 c 0,103.173 10.53,206.07 41.313,289.53 30.78,83.463 82.763,148.094 164.53,170.563 l 2.188,0.626 2.25,-0.5 C 348.873,471.537 401.509,406.629 430.374,322.313 459.239,237.998 465.78,133.657 465.78,30.438 v -10.78 l -10.655,1.53 C 323.26,39.954 191.452,40 59.595,21.188 l -10.69,-1.53 z M 67.75,41.03 c 63.242,8.536 126.495,12.792 189.75,12.782 v 184.532 h 174.78 c -4.905,27.572 -11.31,53.747 -19.592,77.937 -27.348,79.884 -73.757,137.33 -155.157,155.564 -0.008,-0.003 -0.02,0.003 -0.03,0 v -233.5 H 86.53 C 73.66,177.355 68.253,109.535 67.75,41.032 Z" />
+  <rect
+     style="display:inline;fill:#ffffff;stroke-width:0.0282585;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke markers fill"
+     id="rect4-1"
+     width="584.52319"
+     height="39.270721"
+     x="-337.51648"
+     y="-381.67404"
+     ry="2.0010121"
+     transform="rotate(135)" />
+</svg>

@@ -18,13 +18,6 @@ body{
     background-color: gray;
     image-rendering: crisp-edges;
 }
-#sidebar{
-    width: 30vw;
-    position: absolute;
-    height: 100vh;
-    right: 0;
-    background-color: rgb(119, 59, 14);
-}
 .uiText{
     position: absolute;
     top: 0;
@@ -47,4 +40,84 @@ body{
 .coin, .heart {
     height: 50px;
     width: 50px;
+}
+
+#sidebar{
+    width: 30vw;
+    position: absolute;
+    height: 100vh;
+    right: 0;
+    background-color: #006122;
+}
+.tower-option{
+    display: grid;
+    background-color: #333;
+    border: #00290e 3px outset;
+    margin: 10px;
+    padding: 10px;
+    color: white;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 3fr;
+    grid-template-areas: 
+    "header header header"
+    "desc desc desc"
+    "price price piercing"
+    "stats stats2 image";
+}
+.topt-header {
+    font-size: 30px;
+    grid-area: header;
+}
+.topt-desc {
+    color: #00bd42;
+    font-size: 14px;
+    grid-area: desc;
+}
+.topt-cost {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    grid-area: price;
+}
+.topt-price-icon {
+    height: 22px;
+    margin-right: 2px;
+}
+.topt-piercing {
+    font-size: 14px;
+    grid-area: piercing;
+}
+.topt-pierce-icon {
+    height: 20px;
+    margin-right: 2px;
+}
+.topt-stats {
+    grid-area: stats;
+}
+.topt-stats-2 {
+    grid-area: stats2;
+}
+.topt-stats, .topt-stats-2 {
+    display: flex;
+    flex-direction: column;
+}
+.topt-stats-header {
+    color: #00bd42;
+    font-size: 14px;
+}
+.topt-img {
+    grid-area: image;
+}
+.topt-stats-2  .topt-stat-icon{
+    height: 18px;
+}
+.topt-stat {
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    margin: 1px 0;
+}
+.topt-stat-icon {
+    height: 20px;
+    margin-right: 2px;
 }

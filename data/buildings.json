@@ -4,16 +4,17 @@
         "levels" : [
             {
                 "img" : {
-                    "animated" : "false",
+                    "animated" : false,
                     "source" : {
-                        "url" : "/edit/img/tower1/tower1.png",
+                        "url" : "../img/tower1/tower1.png",
                         "width" : 64,
                         "height" : 192,
                         "x" : 0,
                         "y" : 0
                     }
                 },
-                "cost" : 50,
+                "desc" : "Fires fast lightning bolts that stun enemies",
+                "cost" : 100,
                 "stun" : 1000,
                 "reload" : 1000,
                 "range" : 3,
@@ -23,26 +24,26 @@
                     "shield" : 5
                 },
                 "armorPiercing" : false,
-                "shielPiercing" : true,
+                "shieldPiercing" : true,
                 "weapon" : {
                     "turning" : false,
                     "img" : {
-                        "animated" : "false",
+                        "animated" : false,
                         "source" : {
-                            "url" : "/edit/img/tower1/tower1_1w.png",
-                            "width" : 64,
-                            "height" : 64,
-                            "x" : 4,
-                            "y" : 3
+                            "url" : "../img/tower1/tower1_1w.png",
+                            "width" : 48,
+                            "height" : 48,
+                            "x" : 0,
+                            "y" : 0
                         }
                     }
                 },
                 "projectile" : {
                     "speed" : 50,
                     "img" : {
-                        "animated" : "false",
+                        "animated" : false,
                         "source" : {
-                            "url" : "/edit/img/tower1/tower1_1p.png",
+                            "url" : "../img/tower1/tower1_1p.png",
                             "width" : 32,
                             "height" : 32,
                             "x" : 0,
@@ -52,17 +53,209 @@
                 },
                 "impact" : {
                     "img" : {
-                        "animated" : "false",
+                        "animated" : false,
                         "source" : {
-                            "url" : "/edit/img/tower1/tower1_1i.png",
+                            "url" : "../img/tower1/tower1_1i.png",
+                            "width" : 64,
+                            "height" : 64,
+                            "x" : 1,
+                            "y" : 0
+                        }
+                    }
+                }
+            },
+            {
+                "img" : {
+                    "animated" : false,
+                    "source" : {
+                        "url" : "../img/tower1/tower1.png",
+                        "width" : 64,
+                        "height" : 192,
+                        "x" : 1,
+                        "y" : 0
+                    }
+                },
+                "desc" : "A better power source allows for more fire rate and damage",
+                "cost" : 150,
+                "stun" : 1000,
+                "reload" : 750,
+                "range" : 3,
+                "damage" : {
+                    "health" : 30,
+                    "armor" : 15,
+                    "shield" : 5
+                },
+                "armorPiercing" : false,
+                "shieldPiercing" : true,
+                "weapon" : {
+                    "turning" : false,
+                    "img" : {
+                        "animated" : false,
+                        "source" : {
+                            "url" : "../img/tower1/tower1_2w.png",
                             "width" : 64,
                             "height" : 64,
                             "x" : 0,
                             "y" : 0
                         }
                     }
+                },
+                "projectile" : {
+                    "speed" : 50,
+                    "img" : {
+                        "animated" : false,
+                        "source" : {
+                            "url" : "../img/tower1/tower1_1p.png",
+                            "width" : 32,
+                            "height" : 32,
+                            "x" : 0,
+                            "y" : 0
+                        }
+                    }
+                },
+                "impact" : {
+                    "img" : {
+                        "animated" : false,
+                        "source" : {
+                            "url" : "../img/tower1/tower1_1i.png",
+                            "width" : 64,
+                            "height" : 64,
+                            "x" : 2,
+                            "y" : 0
+                        }
+                    }
                 }
             }
+        ]
+    },
+    {
+        "name" : "Crossbow tower",
+        "levels" : [
+            {
+                "img" : {
+                    "animated" : false,
+                    "source" : {
+                        "url" : "../img/tower2/tower2.png",
+                        "width" : 64,
+                        "height" : 128,
+                        "x" : 0,
+                        "y" : 0
+                    }
+                },
+                "desc" : "Fires arrows that do large amounts of health damage",
+                "cost" : 50,
+                "stun" : 0,
+                "reload" : 3000,
+                "range" : 3,
+                "damage" : {
+                    "health" : 50,
+                    "armor" : 5,
+                    "shield" : 10
+                },
+                "armorPiercing" : false,
+                "shieldPiercing" : false,
+                "weapon" : {
+                    "turning" : false,
+                    "img" : {
+                        "animated" : false,
+                        "source" : {
+                            "url" : "../img/tower2/tower2_1w.png",
+                            "width" : 64,
+                            "height" : 64,
+                            "x" : 0,
+                            "y" : 0
+                        }
+                    }
+                },
+                "projectile" : {
+                    "speed" : 10,
+                    "img" : {
+                        "animated" : false,
+                        "source" : {
+                            "url" : "../img/tower2/tower2_1p.png",
+                            "width" : 8,
+                            "height" : 40,
+                            "x" : 0,
+                            "y" : 0
+                        }
+                    }
+                },
+                "impact" : {
+                    "img" : {
+                        "animated" : false,
+                        "source" : {
+                            "url" : "../img/tower2/tower2_impact.png",
+                            "width" : 64,
+                            "height" : 64,
+                            "x" : 1,
+                            "y" : 0
+                        }
+                    }
+                }
+            },
+            {
+                "img" : {
+                    "animated" : false,
+                    "source" : {
+                        "url" : "../img/tower2/tower2.png",
+                        "width" : 64,
+                        "height" : 128,
+                        "x" : 1,
+                        "y" : 0
+                    }
+                },
+                "desc" : "Fires arrows that do large amounts of health damage",
+                "cost" : 50,
+                "stun" : 0,
+                "reload" : 3000,
+                "range" : 3,
+                "damage" : {
+                    "health" : 50,
+                    "armor" : 5,
+                    "shield" : 10
+                },
+                "armorPiercing" : false,
+                "shieldPiercing" : false,
+                "weapon" : {
+                    "turning" : false,
+                    "img" : {
+                        "animated" : false,
+                        "source" : {
+                            "url" : "../img/tower2/tower2_2w.png",
+                            "width" : 64,
+                            "height" : 64,
+                            "x" : 0,
+                            "y" : 0
+                        }
+                    }
+                },
+                "projectile" : {
+                    "speed" : 10,
+                    "img" : {
+                        "animated" : false,
+                        "source" : {
+                            "url" : "../img/tower2/tower2_2p.png",
+                            "width" : 15,
+                            "height" : 40,
+                            "x" : 0,
+                            "y" : 0
+                        }
+                    }
+                },
+                "impact" : {
+                    "img" : {
+                        "animated" : false,
+                        "source" : {
+                            "url" : "../img/tower2/tower2_impact.png",
+                            "width" : 64,
+                            "height" : 64,
+                            "x" : 1,
+                            "y" : 0
+                        }
+                    }
+                }
+            }
+            
         ]
     }
 ]

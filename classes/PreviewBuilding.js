@@ -1,9 +1,9 @@
-export default class Building{
+export default class PreviewBuilding{
     constructor(x, y, source, tileSize){
         this.source = source
-        this.x = x
-        this.y = y
         this.height = this.source.img.source.height / this.source.img.source.width * tileSize
+        this.x = x
+        this.y = y - this.height + 30
         this.width = tileSize
         this.projectiles = []
         this.target = null

@@ -203,8 +203,8 @@ function save() {
         "name": name,
         "difficulty": difficulty,
         "enemyPath": enemyPath,
-        "width": 16,
-        "height": 8,
+        "width": urlParam.width,
+        "height": urlParam.height,
         "tiles": map
     }
     const element = document.createElement('a')
