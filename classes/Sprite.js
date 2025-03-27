@@ -11,6 +11,8 @@ export default class Sprite {
         this.fps = fps
         this.frameTicks = 10
         this.frames = []
+        this.direction = "sideways"
+        this.reverse = false
         if (fps) {
             this.frames = this.#generateFrames(image)
             this.frameTicks = this.imagesource.duration / 1000 * this.fps / this.frames.length
@@ -18,7 +20,6 @@ export default class Sprite {
 
     }
     #generateFrames(image) {
-        console.log(image.source.x_type)
         switch (image.source.x_type) {
             case "range_up_down":
                 const a1 = []
@@ -49,19 +50,21 @@ export default class Sprite {
         this.fps = fps
         this.frameTicks = this.imagesource.duration / 1000 * this.fps / this.frames.length
     }
-    changeImage(img) {
+    changeImage(img, direction, reverse) {
         this.imagesource = img
         this.image.src = img.source.url
         this.frames = this.#generateFrames(this.imagesource)
         this.frameTicks = this.imagesource.duration / 1000 * this.fps / this.frames.length
+        this.direction = direction
+        this.reverse = reverse
     }
     draw(c) {
         if (this.imagesource.animated) {
             const frame = Math.floor((this.ticks % (this.frames.length * this.frameTicks)) / this.frameTicks)
             this.ticks++
-            c.drawImage(this.image, this.frames[frame] * this.imagesource.source.width, this.imagesource.source.y.sideways * this.imagesource.source.height, this.imagesource.source.width, this.imagesource.source.height, this.x, this.y, this.width, this.height)
+            c.drawImage(this.image, this.frames[frame] * this.imagesource.source.width, this.imagesource.source.y[this.direction] * this.imagesource.source.height, this.imagesource.source.width, this.imagesource.source.height, this.x, this.y, this.width, this.height)
         } else {
-            c.drawImage(this.image, this.imagesource.source.x * this.imagesource.source.width, this.imagesource.source.y * this.imagesource.source.height, this.imagesource.source.width, this.imagesource.source.height, this.x, this.y, this.width, this.height)
+            c.drawImage(this.image, this.imagesource.source.x * this.imagesource.source.width, this.imagesource.source.y * this.imagesource.source.height, this.imagesource.source.width, this.imagesource.source.height, this.reverse ? this.x + this.width : this.x, this.reverse ? this.y + this.height : this.y, this.width * (this.reverse ? -1 : 1), this.height * (this.reverse ? -1 : 1))
         }
 
     }

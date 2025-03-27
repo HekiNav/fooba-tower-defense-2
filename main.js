@@ -86,7 +86,9 @@ function update() {
     const step = 0.01
     const scale = 1
     tileSize = Math.floor((window.innerHeight * scale / map.height > window.innerWidth * width * scale / map.width ? window.innerWidth * width * scale / map.width : window.innerHeight * scale / map.height) / step) * step
+    let tileDraw = false
     if (tileSize != prevTileSize) {
+        tileDraw = true
         canvas.style.transform = `scale(${1 / scale})`
 
         if (window.innerHeight / map.height >= window.innerWidth * width / map.width) {
@@ -107,7 +109,7 @@ function update() {
     }
 
     tiles.forEach(tile => {
-        tile.update(c)
+        tile.update(c, tileDraw)
     })
     previewImages.forEach(img => {
         img.draw()
