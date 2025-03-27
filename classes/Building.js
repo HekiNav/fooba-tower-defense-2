@@ -4,15 +4,12 @@ import Weapon from "./Weapon.js"
 export default class Building extends Sprite {
     constructor(x, y, source, tileSize) {
         const img = source.img
-        console.log(img)
         super(x, y, tileSize, tileSize, img)
         this.source = source
         this.height = this.source.img.source.height / this.source.img.source.width * tileSize
         this.width = tileSize
         this.x = x
         this.y = y - this.height + tileSize
-        this.projectiles = []
-        this.target = null
         this.weapon = new Weapon(this.x, this.y, source, tileSize)
         super.updateSize(this.x, this.y, this.width, this.height)
     }
@@ -36,10 +33,13 @@ export default class Building extends Sprite {
             })
         )
     }
-    updateSize(x, y, size) {
+    updateDimensions(x, y, tileSize) {
+        this.height = this.source.img.source.height / this.source.img.source.width * tileSize
+        this.width = tileSize
         this.x = x
-        this.y = y
-        this.size = size
+        this.y = y - this.height + tileSize
+        super.updateSize(this.x, this.y, this.width, this.height)
+        this.weapon.updateSize(x, y, tileSize)
     }
     update(c) {
         super.draw(c)

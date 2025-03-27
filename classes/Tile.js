@@ -1,5 +1,6 @@
 export default class Tile {
     constructor(x, y, size, images = [], building = null) {
+        this.tower = null
         this.selected = false
         this.hovered = false
         this.building = building
@@ -21,12 +22,17 @@ export default class Tile {
         this.x = x
         this.y = y
         this.size = size
+        if (this.tower) this.tower.updateDimensions(x, y, size)
     }
     updateImage(imagesrc) {
-        this.imagesrc = {url: imagesrc.url, x: imagesrc.x, y: imagesrc.y, size: imagesrc.size}
+        this.imagesrc = { url: imagesrc.url, x: imagesrc.x, y: imagesrc.y, size: imagesrc.size }
         this.image = new Image()
         this.image.src = this.imagesrc.url
         this.building = imagesrc.building ? imagesrc.building : null
+    }
+    update(c) {
+        this.draw(c)
+        if (this.tower) this.tower.update(c)
     }
     draw(c) {
         const scaleOffset = 1.01

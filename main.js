@@ -16,7 +16,6 @@ var coinTXT = document.getElementById('coins')
 var hpTXT = document.getElementById('hp')
 let map = null
 let tiles = null
-let buildings = []
 let buildable = []
 let previewBackgrounds = []
 let previewImages = []
@@ -72,7 +71,7 @@ async function getFile(filename) {
     return await response.json()
 }
 function update() {
-    const step = 0.1
+    const step = 0.01
     const scale = 1
     tileSize = Math.floor((window.innerHeight * scale / map.height > window.innerWidth * 0.7 * scale / map.width ? window.innerWidth * 0.7 * scale / map.width : window.innerHeight * scale / map.height) / step) * step
     canvas.style.transform = `scale(${1 / scale})`
@@ -89,18 +88,14 @@ function update() {
     }
     reloadTiles(tiles)
     tiles.forEach(tile => {
-        tile.draw(c)
-    })
-    buildings.forEach(building => {
-        building.update(c)
-
+        tile.update(c)
     })
     previewImages.forEach(img => {
         img.draw()
     })
     setTimeout(() => {
         window.requestAnimationFrame(update);
-      }, 1000 / fps);
+    }, 1000 / fps);
 
 }
 
@@ -127,7 +122,7 @@ function handleMouseOut(e) {
 }
 function buildSideBar(activeTile) {
     let options = buildable.filter(b => b.levels[activeTile.level])
-    const currentBuilding = activeTile.tower ? buildable[Number(activeTile.tower.source.img.source.url.split("/")[2][5])-1] : null
+    const currentBuilding = activeTile.tower ? buildable[Number(activeTile.tower.source.img.source.url.split("/")[2][5]) - 1] : null
     if (currentBuilding) {
         options = options.filter(b => b.name == currentBuilding.name)
     }
@@ -140,19 +135,12 @@ function buildSideBar(activeTile) {
         const image = new TowerPreview(element.querySelector("canvas"), opt.levels[activeTile.level], previewBackgrounds[background])
         element.querySelector(".topt-build").addEventListener("click", () => {
             const building = new Building(activeTile.x, activeTile.y, opt.levels[activeTile.level], tileSize)
-            buildings.push(building)
-            activeTile.level ++
+            activeTile.level++
             activeTile.selected = false
             activeTile.tower = building
             clearSideBar()
-            buildings.sort((a, b) => {
-                return a.y - b.y
-            })
         })
         previewImages.push(image)
-        buildings.sort((a, b) => {
-            return a.y - b.y
-        })
     })
 }
 function clearSideBar() {
