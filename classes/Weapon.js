@@ -5,7 +5,6 @@ export default class Weapon extends Sprite {
         super(0, 0, source.weapon.img.source.width / 64 * tileSize, source.weapon.img.source.width / 64 * tileSize, source.weapon.img)
         this.source = source
         this.xOffset = x
-        console.log(y, source.weapon.offset, tileSize)
         this.yOffset = y + source.weapon.offset / 64 * tileSize
         this.angle = 0
         this.size = source.weapon.img.source.width / 64 * tileSize
@@ -22,7 +21,6 @@ export default class Weapon extends Sprite {
         return this.angle + 1 % 360
     }
     updateSize(x, y, tileSize) {
-        console.log(this.yOffset, y, this.source.weapon.offset, tileSize)
         this.xOffset = x
         this.yOffset = y - (this.source.img.source.height / 64 * tileSize - tileSize) + this.source.weapon.offset / 64 * tileSize
         this.size = this.source.weapon.img.source.width / 64 * tileSize

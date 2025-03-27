@@ -1,0 +1,92 @@
+[
+    {
+        "id": "leafbug",
+        "fly": false,
+        "speed": 10,
+        "health": 100,
+        "armor": 10,
+        "shield": 0,
+        "sizeVariation": {
+            "ranging": {
+                "range": [
+                    0.8,
+                    1.1
+                ],
+                "healthScales": true,
+                "armorScales": false,
+                "shieldScales": false
+            },
+            "special": [
+                {
+                    "chance": 2,
+                    "size": 2,
+                    "healthScale": 3,
+                    "armorScale": 2,
+                    "shieldScale": 1
+                }
+            ]
+        },
+        "img": {
+            "idle": {
+                "animated": true,
+                "duration": 2000,
+                "source": {
+                    "url": "../img/enemies/leafbug.png",
+                    "width": 64,
+                    "height": 64,
+                    "x_type": "range_up",
+                    "x": [
+                        0,
+                        5
+                    ],
+                    "y_type": "directions",
+                    "y": {
+                        "down": 0,
+                        "up": 1,
+                        "sideways": 2
+                    }
+                }
+            },
+            "movement": {
+                "animated": true,
+                "duration": 500,
+                "source": {
+                    "url": "../img/enemies/leafbug.png",
+                    "width": 64,
+                    "height": 64,
+                    "x_type": "range_up",
+                    "x": [
+                        0,
+                        7
+                    ],
+                    "y_type": "directions",
+                    "y": {
+                        "down": 3,
+                        "up": 4,
+                        "sideways": 5
+                    }
+                }
+            },
+            "death": {
+                "animated": true,
+                "duration": 1000,
+                "source": {
+                    "url": "../img/enemies/leafbug.png",
+                    "width": 64,
+                    "height": 64,
+                    "x_type": "range_up",
+                    "x": [
+                        0,
+                        6
+                    ],
+                    "y_type": "directions",
+                    "y": {
+                        "down": 6,
+                        "up": 7,
+                        "sideways": 8
+                    }
+                }
+            }
+        }
+    }
+]

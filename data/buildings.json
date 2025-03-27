@@ -76,7 +76,7 @@
                         "y": 0
                     }
                 },
-                "desc": "A better power source allows for more fire rate and damage",
+                "desc": "A better power source that allows for more fire rate and damage",
                 "cost": 150,
                 "stun": 1000,
                 "reload": 750,

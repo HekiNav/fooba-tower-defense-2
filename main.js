@@ -1,9 +1,13 @@
 import Building from "./classes/Building.js"
+import Enemy from "./classes/Enemy.js"
 import Tile from "./classes/Tile.js"
 import TowerPreview from "./classes/Towerpreview.js"
 const canvas = document.getElementById("canvas")
+const canvasC = document.getElementById("canvasC")
+const sidebar = document.getElementById("sidebar")
 
 const c = canvas.getContext("2d")
+c.imageSmoothingDisabled = true
 
 const fps = 30;
 
@@ -17,11 +21,14 @@ var hpTXT = document.getElementById('hp')
 let map = null
 let tiles = null
 let buildable = []
+let enemies = []
+let enemyTypes = []
 let previewBackgrounds = []
 let previewImages = []
 let tileSize = 10
 const map1 = getFile("maps/bug_bridge.ftdmap.json")
 const bdings = getFile("data/buildings.json")
+const enemData = getFile("data/enemies.json")
 const previewBGs = [
     getFile("maps/tower_preview_background_1.ftdmap.json"),
     getFile("maps/tower_preview_background_2.ftdmap.json"),
@@ -29,15 +36,18 @@ const previewBGs = [
     getFile("maps/tower_preview_background_4.ftdmap.json"),
     getFile("maps/tower_preview_background_5.ftdmap.json"),
 ]
-Promise.all([map1, bdings, ...previewBGs]).then(([map1, bdings, ...previewBGs]) => {
+Promise.all([map1, bdings, enemData, ...previewBGs]).then(([map1, bdings, enemData, ...previewBGs]) => {
     tiles = loadTiles(map1.tiles)
     map = map1
+    enemyTypes = enemData
     buildable = bdings
     previewBackgrounds = previewBGs
     update()
+    enemies.push(new Enemy(enemyTypes[0], map1.enemyPath, tileSize, fps))
     canvas.addEventListener("mousemove", handleMouseMove)
     canvas.addEventListener("mouseout", handleMouseOut)
     canvas.addEventListener("click", handleClick)
+    document.getElementById("sidebarCloser").addEventListener("click", closeSideBar)
 })
 
 function loadTiles(raw) {
@@ -71,27 +81,39 @@ async function getFile(filename) {
     return await response.json()
 }
 function update() {
+    const prevTileSize = tileSize
+    const width = sidebar.classList.contains("open") ? 0.7 : 1
     const step = 0.01
     const scale = 1
-    tileSize = Math.floor((window.innerHeight * scale / map.height > window.innerWidth * 0.7 * scale / map.width ? window.innerWidth * 0.7 * scale / map.width : window.innerHeight * scale / map.height) / step) * step
-    canvas.style.transform = `scale(${1 / scale})`
-    if (window.innerHeight / map.height >= window.innerWidth * 0.7 / map.width) {
-        canvas.width = window.innerWidth * 0.7 * scale
-        canvas.style.width = window.innerWidth * 0.7
-        canvas.height = window.innerWidth * 0.7 * scale * (map.height / map.width)
-        canvas.style.height = window.innerWidth * 0.7 * (map.height / map.width)
-    } else {
-        canvas.height = window.innerHeight * scale
-        canvas.style.height = window.innerHeight
-        canvas.width = window.innerHeight * scale * (map.width / map.height)
-        canvas.style.width = window.innerHeight * (map.width / map.height)
+    tileSize = Math.floor((window.innerHeight * scale / map.height > window.innerWidth * width * scale / map.width ? window.innerWidth * width * scale / map.width : window.innerHeight * scale / map.height) / step) * step
+    if (tileSize != prevTileSize) {
+        canvas.style.transform = `scale(${1 / scale})`
+
+        if (window.innerHeight / map.height >= window.innerWidth * width / map.width) {
+            canvas.width = window.innerWidth * width * scale
+            canvasC.style.width = window.innerWidth * width
+            canvas.height = window.innerWidth * width * scale * (map.height / map.width)
+            canvasC.style.height = window.innerWidth * width * (map.height / map.width)
+        } else {
+            canvas.height = window.innerHeight * scale
+            canvasC.style.height = window.innerHeight
+            canvas.width = window.innerHeight * scale * (map.width / map.height)
+            canvasC.style.width = window.innerHeight * (map.width / map.height)
+        }
+        enemies.forEach(e => {
+            e.updateDimensions(tileSize)
+        })
+        reloadTiles(tiles)
     }
-    reloadTiles(tiles)
+
     tiles.forEach(tile => {
         tile.update(c)
     })
     previewImages.forEach(img => {
         img.draw()
+    })
+    enemies.forEach(e => {
+        e.update(c, fps)
     })
     setTimeout(() => {
         window.requestAnimationFrame(update);
@@ -121,15 +143,43 @@ function handleMouseOut(e) {
     tiles.forEach((tile) => { tile.hovered = false; })
 }
 function buildSideBar(activeTile) {
+    clearSideBar()
+    openSideBar()
     let options = buildable.filter(b => b.levels[activeTile.level])
     const currentBuilding = activeTile.tower ? buildable[Number(activeTile.tower.source.img.source.url.split("/")[2][5]) - 1] : null
     if (currentBuilding) {
         options = options.filter(b => b.name == currentBuilding.name)
     }
-    document.getElementById("sidebar").innerHTML = "TOWERS"
+    if (activeTile.tower) {
+        sidebar.innerHTML += `<span class="sidebar-header">Current Tower</span>`
+        const level = activeTile.level
+        const t = activeTile.tower.source
+
+        const container = document.createElement("div")
+        container.classList.add("tower-option-current")
+        container.innerHTML = `
+        <span class="topt-header"> ${t.name} (Lvl ${level})</span>
+            <span class="topt-desc">${t.desc}</span>
+            <span class="topt-piercing">${t.shieldPiercing ? '<img src="./img/icons/shield-pierce.svg" title="Tower is Shield Piercing" alt="Shield Piercing" class="topt-pierce-icon">' : ""} ${t.armorPiercing ? '<img src="./img/icons/armor-pierce.svg" title="Tower is Armor Piercing" alt="Armor Piercing" class="topt-pierce-icon">' : ""}</span>
+            <div class="topt-stats">
+                <span class="topt-stats-header">Stats</span>
+                <span class="topt-stat" title="Range"><img src="./img/icons/range.svg" alt="Range: " class="topt-stat-icon">${t.range} tiles</span>
+                <span class="topt-stat" title="Reload time"><img src="./img/icons/cooldown.svg" alt="Reload: " class="topt-stat-icon">${t.reload / 1000} s</span>
+                <span class="topt-stat" title="Stun time"><img src="./img/icons/stun.svg" alt="Stun: " class="topt-stat-icon">${t.stun ? t.stun / 1000 + " s" : "-"}</span>
+
+            </div>
+            <div class="topt-stats-2">
+                <span class="topt-stats-header">Damage</span>
+                <span class="topt-stat" title="Health damage"><img src="./img/icons/hearts.svg" alt="Heath: " class="topt-stat-icon">${t.damage.health}</span>
+                <span class="topt-stat" title="Armor damage"><img src="./img/icons/armor.svg" alt="Armor: " class="topt-stat-icon">${t.damage.armor}</span>
+                <span class="topt-stat" title="Shield damage"><img src="./img/icons/shield.svg"  alt="Shield: " class="topt-stat-icon">${t.damage.shield}</span>
+            </div>`
+        sidebar.appendChild(container)
+    }
+    sidebar.innerHTML += `<span class="sidebar-header">Available Towers</span>`
     options.forEach(opt => {
         const element = towerOption(opt, activeTile.level)
-        document.getElementById("sidebar").appendChild(element)
+        sidebar.appendChild(element)
 
         const background = Math.floor(Math.random() * previewBackgrounds.length)
         const image = new TowerPreview(element.querySelector("canvas"), opt.levels[activeTile.level], previewBackgrounds[background])
@@ -138,14 +188,18 @@ function buildSideBar(activeTile) {
             activeTile.level++
             activeTile.selected = false
             activeTile.tower = building
+            activeTile.tower.source.name = opt.name
             clearSideBar()
+            buildSideBar(activeTile)
         })
         previewImages.push(image)
     })
+
 }
 function clearSideBar() {
-    document.getElementById("sidebar").innerHTML = ""
+    sidebar.innerHTML = ""
     previewImages = []
+    closeSideBar()
 }
 function towerOption(tower, level) {
     const t = tower.levels[level]
@@ -180,4 +234,14 @@ function towerOption(tower, level) {
 
     return container
 }
-
+function closeSideBar() {
+    if (!sidebar.classList.contains("open")) return
+    sidebar.classList.remove("open")
+    document.getElementById("sidebarCloser").classList.remove("active")
+    tiles.forEach(t => t.selected = false)
+}
+function openSideBar() {
+    if (sidebar.classList.contains("open")) return
+    sidebar.classList.add("open")
+    document.getElementById("sidebarCloser").classList.add("active")
+}
