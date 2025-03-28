@@ -18,6 +18,8 @@ let mouse = {
 let coins = 50
 var coinTXT = document.getElementById('coins')
 var hpTXT = document.getElementById('hp')
+let tileDraw = true
+
 let map = null
 let tiles = null
 let buildable = []
@@ -26,7 +28,7 @@ let enemyTypes = []
 let previewBackgrounds = []
 let previewImages = []
 let tileSize = 10
-const map1 = getFile("maps/bug_bridge.ftdmap.json")
+const map1 = getFile("maps/water_wall.ftdmap.json")
 const bdings = getFile("data/buildings.json")
 const enemData = getFile("data/enemies.json")
 const previewBGs = [
@@ -43,7 +45,13 @@ Promise.all([map1, bdings, enemData, ...previewBGs]).then(([map1, bdings, enemDa
     buildable = bdings
     previewBackgrounds = previewBGs
     update()
+    tiles.forEach(tile => {
+        tile.update(c, true, enemies)
+    })
     enemies.push(new Enemy(enemyTypes[0], map1.enemyPath, tileSize, fps))
+    setTimeout(() => {
+        enemies.push(new Enemy(enemyTypes[0], map1.enemyPath, tileSize, fps))
+    }, 1000);
     canvas.addEventListener("mousemove", handleMouseMove)
     canvas.addEventListener("mouseout", handleMouseOut)
     canvas.addEventListener("click", handleClick)
@@ -83,10 +91,9 @@ async function getFile(filename) {
 function update() {
     const prevTileSize = tileSize
     const width = sidebar.classList.contains("open") ? 0.7 : 1
-    const step = 0.01
+    const step = 1
     const scale = 1
     tileSize = Math.floor((window.innerHeight * scale / map.height > window.innerWidth * width * scale / map.width ? window.innerWidth * width * scale / map.width : window.innerHeight * scale / map.height) / step) * step
-    let tileDraw = false
     if (tileSize != prevTileSize) {
         tileDraw = true
         canvas.style.transform = `scale(${1 / scale})`
@@ -107,20 +114,24 @@ function update() {
         })
         reloadTiles(tiles)
     }
-
-    tiles.forEach(tile => {
-        tile.update(c, tileDraw)
+    c.save()
+    tiles.forEach((tile) => {
+        tile.update(c, tileDraw, enemies)
     })
+    enemies.forEach(e => {
+        e.update(c)
+    })
+    tiles.forEach((tile) => {
+        tile.updateTower(c, enemies)
+    })
+    c.restore()
     previewImages.forEach(img => {
         img.draw()
     })
-    enemies.forEach(e => {
-        e.update(c, fps)
-    })
+    enemies.forEach(e => e.updated = false)
     setTimeout(() => {
         window.requestAnimationFrame(update);
     }, 1000 / fps);
-
 }
 
 
@@ -186,7 +197,7 @@ function buildSideBar(activeTile) {
         const background = Math.floor(Math.random() * previewBackgrounds.length)
         const image = new TowerPreview(element.querySelector("canvas"), opt.levels[activeTile.level], previewBackgrounds[background])
         element.querySelector(".topt-build").addEventListener("click", () => {
-            const building = new Building(activeTile.x, activeTile.y, opt.levels[activeTile.level], tileSize)
+            const building = new Building(activeTile.x, activeTile.y, opt.levels[activeTile.level], tileSize, fps)
             activeTile.level++
             activeTile.selected = false
             activeTile.tower = building

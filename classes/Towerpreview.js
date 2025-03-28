@@ -3,6 +3,7 @@ import Tile from "./Tile.js"
 
 export default class TowerPreview {
     constructor(canvas, tower, background) {
+        this.drawn = false
         this.canvas = canvas
         this.tower = tower
         this.background = background
@@ -22,10 +23,14 @@ export default class TowerPreview {
         return tiles
     }
     draw() {
-        this.c.clearRect(0, 0, this.canvas.width, this.canvas.height)
-        this.tiles.forEach(tile => {
-            tile.draw(this.c)
-        });
+        if (!this.drawn) {
+            this.drawn = true
+            this.c.clearRect(0, 0, this.canvas.width, this.canvas.height)
+            this.tiles.forEach(tile => {
+                tile.draw(this.c)
+            });
+        }
+
         this.building.update(this.c)
     }
 }

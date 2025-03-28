@@ -30,9 +30,12 @@ export default class Tile {
         this.image.src = this.imagesrc.url
         this.building = imagesrc.building ? imagesrc.building : null
     }
-    update(c) {
-        this.draw(c)
-        if (this.tower) this.tower.update(c)
+    update(c, tileDraw, enemies) {
+        const enemiesNearby = enemies.filter(e => Math.abs(e.x / this.size - this.x / this.size) <= 1.5 && Math.abs(e.y / this.size - this.y / this.size) <= 1.5)
+        if (tileDraw || (enemiesNearby)) this.draw(c)
+    }
+    updateTower(c, enemies) {
+        if (this.tower) this.tower.update(c, enemies)
     }
     draw(c) {
         const scaleOffset = 1.01

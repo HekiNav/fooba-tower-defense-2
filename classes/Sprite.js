@@ -15,6 +15,7 @@ export default class Sprite {
         this.reverse = false
         if (fps) {
             this.frames = this.#generateFrames(image)
+            console.log(image)
             this.frameTicks = this.imagesource.duration / 1000 * this.fps / this.frames.length
         }
 
@@ -38,6 +39,8 @@ export default class Sprite {
                 return a2
             case "array":
                 return image.source.x
+            case "constant":
+                return [image.source.x]
         }
     }
     updateSize(x, y, width, height) {
@@ -62,9 +65,12 @@ export default class Sprite {
         if (this.imagesource.animated) {
             const frame = Math.floor((this.ticks % (this.frames.length * this.frameTicks)) / this.frameTicks)
             this.ticks++
-            c.drawImage(this.image, this.frames[frame] * this.imagesource.source.width, this.imagesource.source.y[this.direction] * this.imagesource.source.height, this.imagesource.source.width, this.imagesource.source.height, this.x, this.y, this.width, this.height)
+            if (this.reverse) c.save()
+            if (this.reverse) c.scale(-1, 1)
+            c.drawImage(this.image, this.frames[frame] * this.imagesource.source.width, [this.imagesource.source.y_type == "directions" ? this.imagesource.source.y[this.direction] : this.imagesource.source.y] * this.imagesource.source.height, this.imagesource.source.width, this.imagesource.source.height, this.x * (this.reverse ? -1 : 1), this.y, this.width * (this.reverse ? -1 : 1), this.height)
+            if (this.reverse) c.restore()
         } else {
-            c.drawImage(this.image, this.imagesource.source.x * this.imagesource.source.width, this.imagesource.source.y * this.imagesource.source.height, this.imagesource.source.width, this.imagesource.source.height, this.reverse ? this.x + this.width : this.x, this.reverse ? this.y + this.height : this.y, this.width * (this.reverse ? -1 : 1), this.height * (this.reverse ? -1 : 1))
+            c.drawImage(this.image, this.imagesource.source.x * this.imagesource.source.width, this.imagesource.source.y * this.imagesource.source.height, this.imagesource.source.width, this.imagesource.source.height, this.x, this.y, this.width, this.height)
         }
 
     }

@@ -37,6 +37,25 @@
                             "x": 0,
                             "y": 0
                         }
+                    },
+                    "shoot": {
+                        "shootFrame": 13,
+                        "img": {
+                            "duration": 750,
+                            "animated": true,
+                            "source": {
+                                "url": "../img/tower1/tower1_1w.png",
+                                "width": 48,
+                                "height": 48,
+                                "x_type": "range_up",
+                                "x": [
+                                    0,
+                                    15
+                                ],
+                                "y_type": "constant",
+                                "y": 1
+                            }
+                        }
                     }
                 },
                 "projectile": {
@@ -99,6 +118,25 @@
                             "height": 64,
                             "x": 0,
                             "y": 0
+                        }
+                    },
+                    "shoot": {
+                        "shootFrame": 13,
+                        "img": {
+                            "duration": 1000,
+                            "animated": true,
+                            "source": {
+                                "url": "../img/tower1/tower1_2w.png",
+                                "width": 64,
+                                "height": 64,
+                                "x_type": "range_up",
+                                "x": [
+                                    0,
+                                    15
+                                ],
+                                "y_type": "constant",
+                                "y": 1
+                            }
                         }
                     }
                 },
@@ -168,6 +206,25 @@
                             "x": 0,
                             "y": 0
                         }
+                    },
+                    "shoot": {
+                        "shootFrame": 1,
+                        "img": {
+                            "duration": 1000,
+                            "animated": true,
+                            "source": {
+                                "url": "../img/tower2/tower2_1w.png",
+                                "width": 96,
+                                "height": 96,
+                                "x_type": "range_up",
+                                "x": [
+                                    0,
+                                    5
+                                ],
+                                "y_type": "constant",
+                                "y": 0
+                            }
+                        }
                     }
                 },
                 "projectile": {
@@ -230,6 +287,25 @@
                             "height": 96,
                             "x": 0,
                             "y": 0
+                        }
+                    },
+                    "shoot": {
+                        "shootFrame": 1,
+                        "img": {
+                            "duration": 1000,
+                            "animated": true,
+                            "source": {
+                                "url": "../img/tower2/tower2_2w.png",
+                                "width": 96,
+                                "height": 96,
+                                "x_type": "range_up",
+                                "x": [
+                                    0,
+                                    5
+                                ],
+                                "y_type": "constant",
+                                "y": 0
+                            }
                         }
                     }
                 },
