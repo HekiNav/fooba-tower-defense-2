@@ -11,14 +11,17 @@ export default class Sprite {
         this.fps = fps
         this.frameTicks = 10
         this.frames = []
+        this.frame = 0
         this.direction = "sideways"
         this.reverse = false
         if (fps) {
             this.frames = this.#generateFrames(image)
-            console.log(image)
             this.frameTicks = this.imagesource.duration / 1000 * this.fps / this.frames.length
         }
 
+    }
+    updateDuration() {
+        this.frameTicks = this.imagesource.duration / 1000 * this.fps / this.frames.length
     }
     #generateFrames(image) {
         switch (image.source.x_type) {
@@ -61,13 +64,17 @@ export default class Sprite {
         this.direction = direction
         this.reverse = reverse
     }
-    draw(c) {
+    draw(c, debug = false) {
+        if (debug) {
+            c.fillStyle = `rgb(0,0,${Math.floor(Math.random() * 256)})`
+            c.fillRect(this.x, this.y, this.width, this.height)
+        }
         if (this.imagesource.animated) {
-            const frame = Math.floor((this.ticks % (this.frames.length * this.frameTicks)) / this.frameTicks)
+            this.frame = Math.floor((this.ticks % (this.frames.length * this.frameTicks)) / this.frameTicks)
             this.ticks++
             if (this.reverse) c.save()
             if (this.reverse) c.scale(-1, 1)
-            c.drawImage(this.image, this.frames[frame] * this.imagesource.source.width, [this.imagesource.source.y_type == "directions" ? this.imagesource.source.y[this.direction] : this.imagesource.source.y] * this.imagesource.source.height, this.imagesource.source.width, this.imagesource.source.height, this.x * (this.reverse ? -1 : 1), this.y, this.width * (this.reverse ? -1 : 1), this.height)
+            c.drawImage(this.image, this.frames[this.frame] * this.imagesource.source.width, [this.imagesource.source.y_type == "directions" ? this.imagesource.source.y[this.direction] : this.imagesource.source.y] * this.imagesource.source.height, this.imagesource.source.width, this.imagesource.source.height, this.x * (this.reverse ? -1 : 1), this.y, this.width * (this.reverse ? -1 : 1), this.height)
             if (this.reverse) c.restore()
         } else {
             c.drawImage(this.image, this.imagesource.source.x * this.imagesource.source.width, this.imagesource.source.y * this.imagesource.source.height, this.imagesource.source.width, this.imagesource.source.height, this.x, this.y, this.width, this.height)

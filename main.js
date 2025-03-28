@@ -48,10 +48,13 @@ Promise.all([map1, bdings, enemData, ...previewBGs]).then(([map1, bdings, enemDa
     tiles.forEach(tile => {
         tile.update(c, true, enemies)
     })
-    enemies.push(new Enemy(enemyTypes[0], map1.enemyPath, tileSize, fps))
+
     setTimeout(() => {
         enemies.push(new Enemy(enemyTypes[0], map1.enemyPath, tileSize, fps))
-    }, 1000);
+    }, 500);
+    setTimeout(() => {
+        enemies.push(new Enemy(enemyTypes[0], map1.enemyPath, tileSize, fps))
+    }, 1500);
     canvas.addEventListener("mousemove", handleMouseMove)
     canvas.addEventListener("mouseout", handleMouseOut)
     canvas.addEventListener("click", handleClick)

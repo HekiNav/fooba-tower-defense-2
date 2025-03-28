@@ -2,7 +2,7 @@
     {
         "id": "leafbug",
         "fly": false,
-        "speed": 1,
+        "speed": 0.7,
         "health": 100,
         "armor": 10,
         "shield": 0,
@@ -19,7 +19,7 @@
             "special": [
                 {
                     "chance": 0.02,
-                    "size": 2,
+                    "size": 1.75,
                     "healthScale": 3,
                     "armorScale": 2,
                     "shieldScale": 1

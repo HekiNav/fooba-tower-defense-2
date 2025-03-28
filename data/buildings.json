@@ -59,7 +59,7 @@
                     }
                 },
                 "projectile": {
-                    "speed": 50,
+                    "speed": 10,
                     "img": {
                         "animated": false,
                         "source": {
@@ -141,7 +141,7 @@
                     }
                 },
                 "projectile": {
-                    "speed": 50,
+                    "speed": 10,
                     "img": {
                         "animated": false,
                         "source": {

@@ -8,10 +8,9 @@ export default class Enemy extends Sprite {
         this.path = path
         this.tileSize = tileSize
         this.size = tileSize * 1
-        this.path.splice(0, 0, { x: this.path[0].x + Math.sign(this.path[0].x - this.path[1].x), y: this.path[0].y + Math.sign(this.path[0].y - this.path[1].y) })
         this.target = path[1]
-        this.x = this.target.x * tileSize - tileSize * 0.5
-        this.y = this.target.y * tileSize - tileSize * 0.5
+        this.xPos = this.target.x * this.tileSize - this.tileSize * 0.5
+        this.yPos = this.target.y * this.tileSize - this.tileSize * 0.5
         this.directionData = this.#getDirection()
         this.status = "movement"
         super.changeImage(source.img[this.status], this.directionData.name == "left" || this.directionData.name == "right" ? "sideways" : this.directionData.name, this.directionData.name == "right")
@@ -22,7 +21,7 @@ export default class Enemy extends Sprite {
         this.shield = this.source.shield
         this.specialVariation = this.source.sizeVariation.special.some(s => {
             if (Math.random() <= s.chance) {
-                this.size *= s.size
+                this.sizeMultiplier = s.size
                 this.health *= s.healthScale
                 this.armor *= s.armorScale
                 this.shield *= s.shieldScale
@@ -32,6 +31,7 @@ export default class Enemy extends Sprite {
         if (!this.specialVariation) {
             const options = this.source.sizeVariation.ranging
             const variation = (Math.random() * (options.range[1] - options.range[0]) + options.range[0]).toFixed(1)
+            this.sizeMultiplier = variation
             if (options.healthScales) this.health *= variation
             if (options.armorScales) this.armor *= variation
             if (options.shieldScales) this.shield *= variation
@@ -39,15 +39,21 @@ export default class Enemy extends Sprite {
         this.maxhealth = this.health
         this.maxarmor = this.armor
         this.maxshield = this.shield
+        console.log(this.path)
+        super.updateDuration(this.imagesource.duration * this.sizeMultiplier)
+        this.xPos = this.path[0].x * this.tileSize - this.tileSize * 0.5
+        this.yPos = this.path[0].y * this.tileSize - this.tileSize * 0.5
         this.#nextTarget()
+        this.updateDimensions(this.tileSize)
     }
     updateDimensions(tileSize) {
-        this.x = this.x / this.tileSize * tileSize
-        this.y = this.y / this.tileSize * tileSize
+        this.xPos = this.xPos / this.size * (tileSize * this.sizeMultiplier)
+        this.yPos = this.yPos / this.size * (tileSize * this.sizeMultiplier)
 
         this.tileSize = tileSize
-        this.size = tileSize * 1
-        super.updateSize(this.x, this.y, this.size, this.size)
+        this.size = this.tileSize * this.sizeMultiplier
+
+        super.updateSize(this.xPos - (this.size - this.tileSize) * 0.5, this.yPos - (this.size - this.tileSize) * 0.5, this.size, this.size)
     }
     bar(c, x, y, color, percent, width, height) {
         if (!percent) return
@@ -58,31 +64,32 @@ export default class Enemy extends Sprite {
     }
     update(c) {
         this.updated = true
+        super.updateSize(this.xPos - (this.size - this.tileSize) * 0.5, this.yPos - (this.size - this.tileSize) * 0.5, this.size, this.size)
         super.draw(c)
-        this.x += this.directionData.x * this.source.speed
-        this.y += this.directionData.y * this.source.speed
+        this.xPos += this.directionData.x * this.source.speed * this.tileSize / 64
+        this.yPos += this.directionData.y * this.source.speed * this.tileSize / 64
         if (this.#pastTarget()) {
-            this.x = this.target.x * this.tileSize - this.tileSize * 0.5
-            this.y = this.target.y * this.tileSize - this.tileSize * 0.5
+            this.xPos = this.target.x * this.tileSize - this.tileSize * 0.5
+            this.yPos = this.target.y * this.tileSize - this.tileSize * 0.5
             this.#nextTarget()
             super.changeImage(this.source.img[this.status], this.directionData.name == "left" || this.directionData.name == "right" ? "sideways" : this.directionData.name, this.directionData.name == "left")
         }
         const width = this.tileSize * 0.8
         const height = 0.05 * this.tileSize
-        this.bar(c, this.x + this.tileSize * 0.5, this.y + height * 0, "blue", this.shield / this.maxshield, width, height)
-        this.bar(c, this.x + this.tileSize * 0.5, this.y + height * 1, "yellow", this.armor / this.maxarmor, width, height)
-        this.bar(c, this.x + this.tileSize * 0.5, this.y + height * 2, "red", this.health / this.maxhealth, width, height)
+        this.bar(c, this.x + this.size * 0.5, this.y + (this.size - this.tileSize) * 0.5 + height * 0, "blue", this.shield / this.maxshield, width, height)
+        this.bar(c, this.x + this.size * 0.5, this.y + (this.size - this.tileSize) * 0.5 + height * 1, "yellow", this.armor / this.maxarmor, width, height)
+        this.bar(c, this.x + this.size * 0.5, this.y + (this.size - this.tileSize) * 0.5 + height * 2, "red", this.health / this.maxhealth, width, height)
     }
     #pastTarget() {
         switch (this.directionData.name) {
             case "right":
-                return this.x > this.target.x * this.tileSize - this.tileSize * 0.5;
+                return this.xPos > this.target.x * this.tileSize - this.tileSize * 0.5;
             case "left":
-                return this.x < this.target.x * this.tileSize - this.tileSize * 0.5;
+                return this.xPos < this.target.x * this.tileSize - this.tileSize * 0.5;
             case "down":
-                return this.y > this.target.y * this.tileSize - this.tileSize * 0.5;
+                return this.yPos > this.target.y * this.tileSize - this.tileSize * 0.5;
             case "up":
-                return this.y < this.target.y * this.tileSize - this.tileSize * 0.5;
+                return this.yPos < this.target.y * this.tileSize - this.tileSize * 0.5;
         }
     }
     #nextTarget() {
