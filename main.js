@@ -15,9 +15,10 @@ let mouse = {
     offset: { x: 0, y: 0 },
     down: false
 }
-let coins = 50
-var coinTXT = document.getElementById('coins')
-var hpTXT = document.getElementById('hp')
+let coins = 0
+let hp = 0
+const coinTXT = document.getElementById('coins')
+const hpTXT = document.getElementById('hp')
 let tileDraw = true
 
 let map = null
@@ -38,6 +39,8 @@ const previewBGs = [
     getFile("maps/tower_preview_background_4.ftdmap.json"),
     getFile("maps/tower_preview_background_5.ftdmap.json"),
 ]
+updateCoins(50)
+updateHp(100)
 Promise.all([map1, bdings, enemData, ...previewBGs]).then(([map1, bdings, enemData, ...previewBGs]) => {
     tiles = loadTiles(map1.tiles)
     map = map1
@@ -48,13 +51,10 @@ Promise.all([map1, bdings, enemData, ...previewBGs]).then(([map1, bdings, enemDa
     tiles.forEach(tile => {
         tile.update(c, true, enemies)
     })
-
-    setTimeout(() => {
-        enemies.push(new Enemy(enemyTypes[0], map1.enemyPath, tileSize, fps))
-    }, 500);
-    setTimeout(() => {
-        enemies.push(new Enemy(enemyTypes[0], map1.enemyPath, tileSize, fps))
-    }, 1500);
+    const enemyCount = 500
+    for (let i = 0; i < enemyCount; i++) {
+        enemies.push(new Enemy(enemyTypes[0], map1.enemyPath, tileSize, fps, (e) => enemies.splice(enemies.findIndex(en => en.xPos == e.xPos && en.yPos == e.yPos), 1), updateCoins, updateHp))
+    }
     canvas.addEventListener("mousemove", handleMouseMove)
     canvas.addEventListener("mouseout", handleMouseOut)
     canvas.addEventListener("click", handleClick)
@@ -94,7 +94,7 @@ async function getFile(filename) {
 function update() {
     const prevTileSize = tileSize
     const width = sidebar.classList.contains("open") ? 0.7 : 1
-    const step = 1
+    const step = 0.1
     const scale = 1
     tileSize = Math.floor((window.innerHeight * scale / map.height > window.innerWidth * width * scale / map.width ? window.innerWidth * width * scale / map.width : window.innerHeight * scale / map.height) / step) * step
     if (tileSize != prevTileSize) {
@@ -260,4 +260,12 @@ function openSideBar() {
     if (sidebar.classList.contains("open")) return
     sidebar.classList.add("open")
     document.getElementById("sidebarCloser").classList.add("active")
+}
+function updateHp(amount) {
+    hp += amount
+    hpTXT.innerHTML = hp
+}
+function updateCoins(amount) {
+    coins += amount
+    coinTXT.innerHTML = coins
 }

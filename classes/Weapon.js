@@ -44,7 +44,7 @@ export default class Weapon extends Sprite {
     }
     shoot(target) {
         this.projectiles.push(
-            new Projectile(this.xOffset, this.yOffset, this.angle, this.tileSize, this.source, this.fps, target)
+            new Projectile(this.xOffset, this.yOffset, this.tileSize, this.source, this.fps, target, (p) => this.projectiles.splice(this.projectiles.findIndex(pr => pr.xOffset == p.xOffset && pr.yOffset == p.yOffset), 1))
         )
     }
     updateFps(fps) {
@@ -64,6 +64,7 @@ export default class Weapon extends Sprite {
         this.tileSize = tileSize
         super.updateSize(0, 0, this.size, this.size)
         this.shootSprite.updateSize(0, 0, this.size, this.size)
+        this.projectiles.forEach(p => p.updateSize(this.tileSize))
     }
     draw(c) {
         c.translate(this.xOffset + this.tileSize * 0.5, this.yOffset + this.tileSize * 0.5)

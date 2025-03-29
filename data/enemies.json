@@ -6,6 +6,7 @@
         "health": 100,
         "armor": 10,
         "shield": 0,
+        "reward": 50,
         "sizeVariation": {
             "ranging": {
                 "range": [
@@ -18,6 +19,7 @@
             },
             "special": [
                 {
+                    "reward": 200,
                     "chance": 0.02,
                     "size": 1.75,
                     "healthScale": 3,

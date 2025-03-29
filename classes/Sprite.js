@@ -74,7 +74,17 @@ export default class Sprite {
             this.ticks++
             if (this.reverse) c.save()
             if (this.reverse) c.scale(-1, 1)
-            c.drawImage(this.image, this.frames[this.frame] * this.imagesource.source.width, [this.imagesource.source.y_type == "directions" ? this.imagesource.source.y[this.direction] : this.imagesource.source.y] * this.imagesource.source.height, this.imagesource.source.width, this.imagesource.source.height, this.x * (this.reverse ? -1 : 1), this.y, this.width * (this.reverse ? -1 : 1), this.height)
+            c.drawImage(
+                this.image,
+                this.frames[this.frame] * this.imagesource.source.width,
+                (this.imagesource.source.y_type == "directions" ? this.imagesource.source.y[this.direction] : this.imagesource.source.y) * this.imagesource.source.height,
+                this.imagesource.source.width,
+                this.imagesource.source.height,
+                this.x * (this.reverse ? -1 : 1),
+                this.y,
+                this.width * (this.reverse ? -1 : 1),
+                this.height
+            )
             if (this.reverse) c.restore()
         } else {
             c.drawImage(this.image, this.imagesource.source.x * this.imagesource.source.width, this.imagesource.source.y * this.imagesource.source.height, this.imagesource.source.width, this.imagesource.source.height, this.x, this.y, this.width, this.height)

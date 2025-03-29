@@ -1,7 +1,7 @@
 import Sprite from "./Sprite.js"
 
 export default class Enemy extends Sprite {
-    constructor(source, path, tileSize, fps) {
+    constructor(source, path, tileSize, fps, destroy, updateCoins, updateHp) {
         super(100, 100, tileSize, tileSize, source.img.idle, fps)
         this.updated = false
         this.source = source
@@ -15,16 +15,20 @@ export default class Enemy extends Sprite {
         this.status = "movement"
         super.changeImage(source.img[this.status], this.directionData.name == "left" || this.directionData.name == "right" ? "sideways" : this.directionData.name, this.directionData.name == "right")
         super.updateFps(fps)
-
+        this.destroy = destroy
+        this.updateHp = updateHp
+        this.updateCoins = updateCoins
         this.health = this.source.health
         this.armor = this.source.armor
         this.shield = this.source.shield
+        this.reward = this.source.reward
         this.specialVariation = this.source.sizeVariation.special.some(s => {
             if (Math.random() <= s.chance) {
                 this.sizeMultiplier = s.size
                 this.health *= s.healthScale
                 this.armor *= s.armorScale
                 this.shield *= s.shieldScale
+                this.reward = s.reward
                 return true
             }
         });
@@ -39,12 +43,26 @@ export default class Enemy extends Sprite {
         this.maxhealth = this.health
         this.maxarmor = this.armor
         this.maxshield = this.shield
-        console.log(this.path)
         super.updateDuration(this.imagesource.duration * this.sizeMultiplier)
         this.xPos = this.path[0].x * this.tileSize - this.tileSize * 0.5
         this.yPos = this.path[0].y * this.tileSize - this.tileSize * 0.5
         this.#nextTarget()
         this.updateDimensions(this.tileSize)
+    }
+    hit(damage, armorPiercing, shieldPiercing, stun) {
+        if (this.shield > 0)
+            this.shield -= damage.shield
+        if (this.shield <= 0 || shieldPiercing)
+            this.armor -= damage.armor
+        if (this.armor <= 0 || armorPiercing)
+            this.health -= damage.health
+
+        if (this.shield < 0) this.shield = 0
+        if (this.armor < 0) this.armor = 0
+        if (this.health < 0) {
+            this.updateCoins(this.reward)
+            this.destroy(this)
+        }
     }
     updateDimensions(tileSize) {
         this.xPos = this.xPos / this.size * (tileSize * this.sizeMultiplier)
@@ -94,7 +112,11 @@ export default class Enemy extends Sprite {
     }
     #nextTarget() {
         this.target = this.path[this.path.findIndex(p => p.x == this.target.x && p.y == this.target.y) + 1]
-        if (!this.target) console.log("Reached End")
+        if (!this.target) {
+            this.updateHp(Math.round(-this.reward / 10))
+            this.destroy(this)
+            return
+        }
         this.directionData = this.#getDirection()
     }
     #getDirection() {
