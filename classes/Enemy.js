@@ -7,10 +7,9 @@ export default class Enemy extends Sprite {
         this.source = source
         this.path = path
         this.tileSize = tileSize
-        this.size = tileSize * 1
+        this.width = tileSize * 1
+        this.height = tileSize * 1
         this.target = path[1]
-        this.xPos = this.target.x * this.tileSize - this.tileSize * 0.5
-        this.yPos = this.target.y * this.tileSize - this.tileSize * 0.5
         this.directionData = this.#getDirection()
         this.status = "movement"
         super.changeImage(source.img[this.status], this.directionData.name == "left" || this.directionData.name == "right" ? "sideways" : this.directionData.name, this.directionData.name == "right")
@@ -44,10 +43,12 @@ export default class Enemy extends Sprite {
         this.maxarmor = this.armor
         this.maxshield = this.shield
         super.updateDuration(this.imagesource.duration * this.sizeMultiplier)
-        this.xPos = this.path[0].x * this.tileSize - this.tileSize * 0.5
-        this.yPos = this.path[0].y * this.tileSize - this.tileSize * 0.5
+        this.xPos = this.target.x * this.tileSize - this.tileSize * 0.5
+        this.yPos = this.target.y * this.tileSize - this.tileSize * 0.5
+        this.width = tileSize * this.source.width * this.sizeMultiplier
+        this.height = tileSize * this.source.height * this.sizeMultiplier
+        super.updateSize(this.xPos - (this.width - this.tileSize) * 0.5, this.yPos - (this.height - this.tileSize) * 0.5, this.width, this.height)
         this.#nextTarget()
-        this.updateDimensions(this.tileSize)
     }
     hit(damage, armorPiercing, shieldPiercing, stun) {
         if (this.shield > 0)
@@ -59,19 +60,20 @@ export default class Enemy extends Sprite {
 
         if (this.shield < 0) this.shield = 0
         if (this.armor < 0) this.armor = 0
-        if (this.health < 0) {
+        if (this.health <= 0) {
             this.updateCoins(this.reward)
             this.destroy(this)
         }
     }
     updateDimensions(tileSize) {
-        this.xPos = this.xPos / this.size * (tileSize * this.sizeMultiplier)
-        this.yPos = this.yPos / this.size * (tileSize * this.sizeMultiplier)
+        this.xPos = this.xPos / this.width * (tileSize * this.sizeMultiplier)
+        this.yPos = this.yPos / this.height * (tileSize * this.sizeMultiplier)
 
         this.tileSize = tileSize
-        this.size = this.tileSize * this.sizeMultiplier
-
-        super.updateSize(this.xPos - (this.size - this.tileSize) * 0.5, this.yPos - (this.size - this.tileSize) * 0.5, this.size, this.size)
+        this.width = this.tileSize * this.source.width * this.sizeMultiplier
+        this.height = this.tileSize * this.source.height * this.sizeMultiplier
+        console.log(this.xPos, this.width, this.tileSize, this.yPos, this.height)
+        super.updateSize(this.xPos - (this.width - this.tileSize) * 0.5, this.yPos - (this.height - this.tileSize) * 0.5, this.width, this.height)
     }
     bar(c, x, y, color, percent, width, height) {
         if (!percent) return
@@ -82,7 +84,7 @@ export default class Enemy extends Sprite {
     }
     update(c) {
         this.updated = true
-        super.updateSize(this.xPos - (this.size - this.tileSize) * 0.5, this.yPos - (this.size - this.tileSize) * 0.5, this.size, this.size)
+        super.updateSize(this.xPos - (this.width - this.tileSize) * 0.5, this.yPos - (this.height - this.tileSize) * 0.5, this.width, this.height)
         super.draw(c)
         this.xPos += this.directionData.x * this.source.speed * this.tileSize / 64
         this.yPos += this.directionData.y * this.source.speed * this.tileSize / 64
@@ -94,9 +96,9 @@ export default class Enemy extends Sprite {
         }
         const width = this.tileSize * 0.8
         const height = 0.05 * this.tileSize
-        this.bar(c, this.x + this.size * 0.5, this.y + (this.size - this.tileSize) * 0.5 + height * 0, "blue", this.shield / this.maxshield, width, height)
-        this.bar(c, this.x + this.size * 0.5, this.y + (this.size - this.tileSize) * 0.5 + height * 1, "yellow", this.armor / this.maxarmor, width, height)
-        this.bar(c, this.x + this.size * 0.5, this.y + (this.size - this.tileSize) * 0.5 + height * 2, "red", this.health / this.maxhealth, width, height)
+        this.bar(c, this.x + this.width * 0.5, this.y + (this.height - this.tileSize) * 0.5 + height * 0, "blue", this.shield / this.maxshield, width, height)
+        this.bar(c, this.x + this.width * 0.5, this.y + (this.height - this.tileSize) * 0.5 + height * 1, "yellow", this.armor / this.maxarmor, width, height)
+        this.bar(c, this.x + this.width * 0.5, this.y + (this.height - this.tileSize) * 0.5 + height * 2, "red", this.health / this.maxhealth, width, height)
     }
     #pastTarget() {
         switch (this.directionData.name) {

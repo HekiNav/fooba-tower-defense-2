@@ -32,6 +32,7 @@ let tileSize = 10
 const map1 = getFile("maps/water_wall.ftdmap.json")
 const bdings = getFile("data/buildings.json")
 const enemData = getFile("data/enemies.json")
+const waveData = getFile("data/waves.json")
 const previewBGs = [
     getFile("maps/tower_preview_background_1.ftdmap.json"),
     getFile("maps/tower_preview_background_2.ftdmap.json"),
@@ -41,7 +42,7 @@ const previewBGs = [
 ]
 updateCoins(50)
 updateHp(100)
-Promise.all([map1, bdings, enemData, ...previewBGs]).then(([map1, bdings, enemData, ...previewBGs]) => {
+Promise.all([map1, bdings, enemData, waveData, ...previewBGs]).then(([map1, bdings, enemData, waves, ...previewBGs]) => {
     tiles = loadTiles(map1.tiles)
     map = map1
     enemyTypes = enemData
@@ -51,10 +52,10 @@ Promise.all([map1, bdings, enemData, ...previewBGs]).then(([map1, bdings, enemDa
     tiles.forEach(tile => {
         tile.update(c, true, enemies)
     })
-    const enemyCount = 500
-    for (let i = 0; i < enemyCount; i++) {
-        enemies.push(new Enemy(enemyTypes[0], map1.enemyPath, tileSize, fps, (e) => enemies.splice(enemies.findIndex(en => en.xPos == e.xPos && en.yPos == e.yPos), 1), updateCoins, updateHp))
-    }
+    waves = waves
+
+    enemies.push(new Enemy(enemyTypes[Math.floor(Math.random() * enemyTypes.length)], map1.enemyPath, tileSize, fps, (e) => enemies.splice(enemies.findIndex(en => en.xPos == e.xPos && en.yPos == e.yPos), 1), updateCoins, updateHp))
+
     canvas.addEventListener("mousemove", handleMouseMove)
     canvas.addEventListener("mouseout", handleMouseOut)
     canvas.addEventListener("click", handleClick)
@@ -198,7 +199,7 @@ function buildSideBar(activeTile) {
         sidebar.appendChild(element)
 
         const background = Math.floor(Math.random() * previewBackgrounds.length)
-        const image = new TowerPreview(element.querySelector("canvas"), opt.levels[activeTile.level], previewBackgrounds[background])
+        const image = new TowerPreview(element.querySelector("canvas"), opt.levels[activeTile.level], previewBackgrounds[background], fps)
         element.querySelector(".topt-build").addEventListener("click", () => {
             const building = new Building(activeTile.x, activeTile.y, opt.levels[activeTile.level], tileSize, fps)
             activeTile.level++

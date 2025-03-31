@@ -3,7 +3,7 @@ import Sprite from "./Sprite.js";
 
 export default class Weapon extends Sprite {
     constructor(x, y, source, tileSize, fps) {
-        super(0, 0, source.weapon.img.source.width / 64 * tileSize, source.weapon.img.source.width / 64 * tileSize, source.weapon.img)
+        super(0, 0, source.weapon.img.source.width / 64 * tileSize, source.weapon.img.source.width / 64 * tileSize, source.weapon.img, fps)
         this.fps = fps
         this.source = source
         this.xOffset = x

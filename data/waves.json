@@ -1,0 +1,15 @@
+[
+    [
+        {
+            "type": "set",
+            "values": [
+                {
+                    "amount": 3,
+                    "id": "leafbug",
+                    "interval": "500",
+                    "delay": 0
+                }
+            ]
+        }
+    ]
+]

@@ -4,6 +4,7 @@ import Weapon from "./Weapon.js"
 export default class Building extends Sprite {
     constructor(x, y, source, tileSize, fps) {
         const img = source.img
+        console.log(img)
         super(x, y, tileSize, tileSize, img)
         this.source = source
         this.height = this.source.img.source.height / this.source.img.source.width * tileSize

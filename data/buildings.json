@@ -29,12 +29,18 @@
                     "offset": 80,
                     "turning": false,
                     "img": {
-                        "animated": false,
+                        "animated": true,
+                        "duration": 2000,
                         "source": {
                             "url": "../img/tower1/tower1_1w.png",
                             "width": 48,
                             "height": 48,
-                            "x": 0,
+                            "x_type": "range_up",
+                            "x": [
+                                0,
+                                9
+                            ],
+                            "y_type": "constant",
                             "y": 0
                         }
                     },
@@ -110,7 +116,7 @@
                 },
                 "desc": "A better power source that allows for more fire rate and damage",
                 "cost": 150,
-                "stun": 1000,
+                "stun": 2000,
                 "reload": 750,
                 "range": 3,
                 "damage": {
@@ -124,12 +130,18 @@
                     "offset": 72,
                     "turning": false,
                     "img": {
-                        "animated": false,
+                        "animated": true,
+                        "duration": 1000,
                         "source": {
                             "url": "../img/tower1/tower1_2w.png",
                             "width": 64,
                             "height": 64,
-                            "x": 0,
+                            "x_type": "range_up",
+                            "x": [
+                                0,
+                                14
+                            ],
+                            "y_type": "constant",
                             "y": 0
                         }
                     },
@@ -185,6 +197,107 @@
                             "x": [
                                 0,
                                 5
+                            ],
+                            "y_type": "constant",
+                            "y": 0
+                        }
+                    }
+                }
+            },
+            {
+                "img": {
+                    "animated": false,
+                    "source": {
+                        "url": "../img/tower1/tower1.png",
+                        "width": 64,
+                        "height": 192,
+                        "x": 2,
+                        "y": 0
+                    }
+                },
+                "desc": "An improved tower with more range",
+                "cost": 500,
+                "stun": 2000,
+                "reload": 750,
+                "range": 5,
+                "damage": {
+                    "health": 30,
+                    "armor": 20,
+                    "shield": 10
+                },
+                "armorPiercing": false,
+                "shieldPiercing": true,
+                "weapon": {
+                    "offset": 64,
+                    "turning": false,
+                    "img": {
+                        "animated": true,
+                        "duration": 2000,
+                        "source": {
+                            "url": "../img/tower1/tower1_3w.png",
+                            "width": 64,
+                            "height": 64,
+                            "x_type": "range_up",
+                            "x": [
+                                0,
+                                19
+                            ],
+                            "y_type": "constant",
+                            "y": 0
+                        }
+                    },
+                    "shoot": {
+                        "shootFrame": 11,
+                        "img": {
+                            "duration": 500,
+                            "animated": true,
+                            "source": {
+                                "url": "../img/tower1/tower1_3w.png",
+                                "width": 64,
+                                "height": 64,
+                                "x_type": "range_up",
+                                "x": [
+                                    0,
+                                    18
+                                ],
+                                "y_type": "constant",
+                                "y": 1
+                            }
+                        }
+                    }
+                },
+                "projectile": {
+                    "speed": 10,
+                    "turning": false,
+                    "img": {
+                        "duration": 1000,
+                        "animated": true,
+                        "source": {
+                            "url": "../img/tower1/tower1_3p.png",
+                            "width": 32,
+                            "height": 32,
+                            "x_type": "range_up",
+                            "x": [
+                                0,
+                                4
+                            ],
+                            "y_type": "constant",
+                            "y": 0
+                        }
+                    }
+                },
+                "impact": {
+                    "img": {
+                        "duration": 700,
+                        "animated": true,
+                        "source": {
+                            "url": "../img/tower1/tower1_3i.png",
+                            "width": 64,
+                            "height": 64,
+                            "x_type": "range_up",
+                            "x": [
+                                0,
+                                6
                             ],
                             "y_type": "constant",
                             "y": 0
@@ -303,18 +416,18 @@
                         "y": 0
                     }
                 },
-                "desc": "Fires arrows that do large amounts of health damage",
-                "cost": 50,
+                "desc": "Adds a rapid firing crossbow with three arrows",
+                "cost": 1200,
                 "stun": 0,
-                "reload": 3000,
-                "range": 3,
+                "reload": 500,
+                "range": 6,
                 "damage": {
-                    "health": 50,
-                    "armor": 5,
-                    "shield": 10
+                    "health": 100,
+                    "armor": 20,
+                    "shield": 20
                 },
-                "armorPiercing": false,
-                "shieldPiercing": false,
+                "armorPiercing": true,
+                "shieldPiercing": true,
                 "weapon": {
                     "offset": 10,
                     "turning": true,
@@ -357,6 +470,101 @@
                         "source": {
                             "url": "../img/tower2/tower2_2p.png",
                             "width": 15,
+                            "height": 40,
+                            "x_type": "range_up",
+                            "x": [
+                                0,
+                                2
+                            ],
+                            "y_type": "constant",
+                            "y": 0
+                        }
+                    }
+                },
+                "impact": {
+                    "img": {
+                        "duration": 500,
+                        "animated": true,
+                        "source": {
+                            "url": "../img/tower2/tower2_impact.png",
+                            "width": 64,
+                            "height": 64,
+                            "x_type": "range_up",
+                            "x": [
+                                0,
+                                5
+                            ],
+                            "y_type": "constant",
+                            "y": 0
+                        }
+                    }
+                }
+            },
+            {
+                "img": {
+                    "animated": false,
+                    "source": {
+                        "url": "../img/tower2/tower2.png",
+                        "width": 64,
+                        "height": 128,
+                        "x": 2,
+                        "y": 0
+                    }
+                },
+                "desc": "Adds a rapid firing crossbow with three arrows",
+                "cost": 1200,
+                "stun": 0,
+                "reload": 500,
+                "range": 6,
+                "damage": {
+                    "health": 100,
+                    "armor": 20,
+                    "shield": 20
+                },
+                "armorPiercing": true,
+                "shieldPiercing": true,
+                "weapon": {
+                    "offset": 10,
+                    "turning": true,
+                    "img": {
+                        "animated": false,
+                        "source": {
+                            "url": "../img/tower2/tower2_3w.png",
+                            "width": 96,
+                            "height": 96,
+                            "x": 0,
+                            "y": 0
+                        }
+                    },
+                    "shoot": {
+                        "shootFrame": 1,
+                        "img": {
+                            "duration": 1000,
+                            "animated": true,
+                            "source": {
+                                "url": "../img/tower2/tower2_3w.png",
+                                "width": 96,
+                                "height": 96,
+                                "x_type": "range_up",
+                                "x": [
+                                    0,
+                                    5
+                                ],
+                                "y_type": "constant",
+                                "y": 0
+                            }
+                        }
+                    }
+                },
+                "projectile": {
+                    "speed": 10,
+                    "turning": true,
+                    "img": {
+                        "duration": 1000,
+                        "animated": true,
+                        "source": {
+                            "url": "../img/tower2/tower2_3p.png",
+                            "width": 22,
                             "height": 40,
                             "x_type": "range_up",
                             "x": [

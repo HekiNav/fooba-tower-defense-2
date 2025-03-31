@@ -14,7 +14,7 @@ export default class Sprite {
         this.frame = 0
         this.direction = "sideways"
         this.reverse = false
-        if (fps) {
+        if (this.imagesource.animated) {
             this.frames = this.#generateFrames(image)
             this.frameTicks = this.imagesource.duration / 1000 * this.fps / this.frames.length
         }

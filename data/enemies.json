@@ -1,12 +1,14 @@
 [
     {
         "id": "leafbug",
-        "fly": false,
+        "flying": false,
         "speed": 0.7,
         "health": 100,
         "armor": 10,
         "shield": 0,
         "reward": 50,
+        "width": 1,
+        "height": 1,
         "sizeVariation": {
             "ranging": {
                 "range": [
@@ -80,6 +82,288 @@
                     "x": [
                         0,
                         6
+                    ],
+                    "y_type": "directions",
+                    "y": {
+                        "down": 6,
+                        "up": 7,
+                        "sideways": 8
+                    }
+                }
+            }
+        }
+    },
+    {
+        "id": "firebug",
+        "flying": false,
+        "speed": 1,
+        "health": 250,
+        "armor": 100,
+        "shield": 50,
+        "reward": 250,
+        "width": 2,
+        "height": 1,
+        "sizeVariation": {
+            "ranging": {
+                "range": [
+                    0.6,
+                    1.2
+                ],
+                "healthScales": true,
+                "armorScales": false,
+                "shieldScales": false
+            },
+            "special": [
+                {
+                    "reward": 500,
+                    "chance": 0.05,
+                    "size": 0.2,
+                    "healthScale": 1,
+                    "armorScale": 1,
+                    "shieldScale": 1
+                }
+            ]
+        },
+        "img": {
+            "idle": {
+                "animated": true,
+                "duration": 2000,
+                "source": {
+                    "url": "../img/enemies/firebug.png",
+                    "width": 128,
+                    "height": 64,
+                    "x_type": "range_up",
+                    "x": [
+                        0,
+                        5
+                    ],
+                    "y_type": "directions",
+                    "y": {
+                        "down": 0,
+                        "up": 1,
+                        "sideways": 2
+                    }
+                }
+            },
+            "movement": {
+                "animated": true,
+                "duration": 1000,
+                "source": {
+                    "url": "../img/enemies/firebug.png",
+                    "width": 128,
+                    "height": 64,
+                    "x_type": "range_up",
+                    "x": [
+                        0,
+                        7
+                    ],
+                    "y_type": "directions",
+                    "y": {
+                        "down": 3,
+                        "up": 4,
+                        "sideways": 5
+                    }
+                }
+            },
+            "death": {
+                "animated": true,
+                "duration": 1000,
+                "source": {
+                    "url": "../img/enemies/firebug.png",
+                    "width": 128,
+                    "height": 64,
+                    "x_type": "range_up",
+                    "x": [
+                        0,
+                        10
+                    ],
+                    "y_type": "directions",
+                    "y": {
+                        "down": 6,
+                        "up": 7,
+                        "sideways": 8
+                    }
+                }
+            }
+        }
+    },
+    {
+        "id": "scorpion",
+        "flying": false,
+        "speed": 0.5,
+        "health": 500,
+        "armor": 200,
+        "shield": 50,
+        "reward": 400,
+        "width": 1,
+        "height": 1,
+        "sizeVariation": {
+            "ranging": {
+                "range": [
+                    0.9,
+                    1.1
+                ],
+                "healthScales": true,
+                "armorScales": true,
+                "shieldScales": true
+            },
+            "special": [
+                {
+                    "reward": 700,
+                    "chance": 0.01,
+                    "size": 1.5,
+                    "healthScale": 2,
+                    "armorScale": 2,
+                    "shieldScale": 3
+                }
+            ]
+        },
+        "img": {
+            "idle": {
+                "animated": true,
+                "duration": 2000,
+                "source": {
+                    "url": "../img/enemies/scorpion.png",
+                    "width": 64,
+                    "height": 64,
+                    "x_type": "range_up",
+                    "x": [
+                        0,
+                        7
+                    ],
+                    "y_type": "directions",
+                    "y": {
+                        "down": 0,
+                        "up": 1,
+                        "sideways": 2
+                    }
+                }
+            },
+            "movement": {
+                "animated": true,
+                "duration": 1000,
+                "source": {
+                    "url": "../img/enemies/scorpion.png",
+                    "width": 64,
+                    "height": 64,
+                    "x_type": "range_up",
+                    "x": [
+                        0,
+                        7
+                    ],
+                    "y_type": "directions",
+                    "y": {
+                        "down": 3,
+                        "up": 4,
+                        "sideways": 5
+                    }
+                }
+            },
+            "death": {
+                "animated": true,
+                "duration": 1000,
+                "source": {
+                    "url": "../img/enemies/scorpion.png",
+                    "width": 64,
+                    "height": 64,
+                    "x_type": "range_up",
+                    "x": [
+                        0,
+                        7
+                    ],
+                    "y_type": "directions",
+                    "y": {
+                        "down": 6,
+                        "up": 7,
+                        "sideways": 8
+                    }
+                }
+            }
+        }
+    },
+    {
+        "id": "magma_crab",
+        "flying": false,
+        "speed": 0.2,
+        "health": 2000,
+        "armor": 500,
+        "shield": 100,
+        "reward": 400,
+        "width": 1,
+        "height": 1,
+        "sizeVariation": {
+            "ranging": {
+                "range": [
+                    0.9,
+                    1.1
+                ],
+                "healthScales": true,
+                "armorScales": true,
+                "shieldScales": true
+            },
+            "special": [
+                {
+                    "reward": 700,
+                    "chance": 0.01,
+                    "size": 1.5,
+                    "healthScale": 2,
+                    "armorScale": 2,
+                    "shieldScale": 3
+                }
+            ]
+        },
+        "img": {
+            "idle": {
+                "animated": true,
+                "duration": 4000,
+                "source": {
+                    "url": "../img/enemies/magma_crab.png",
+                    "width": 64,
+                    "height": 64,
+                    "x_type": "range_up",
+                    "x": [
+                        0,
+                        7
+                    ],
+                    "y_type": "directions",
+                    "y": {
+                        "down": 0,
+                        "up": 1,
+                        "sideways": 2
+                    }
+                }
+            },
+            "movement": {
+                "animated": true,
+                "duration": 2000,
+                "source": {
+                    "url": "../img/enemies/magma_crab.png",
+                    "width": 64,
+                    "height": 64,
+                    "x_type": "range_up",
+                    "x": [
+                        0,
+                        7
+                    ],
+                    "y_type": "directions",
+                    "y": {
+                        "down": 3,
+                        "up": 4,
+                        "sideways": 5
+                    }
+                }
+            },
+            "death": {
+                "animated": true,
+                "duration": 1000,
+                "source": {
+                    "url": "../img/enemies/magma_crab.png",
+                    "width": 64,
+                    "height": 64,
+                    "x_type": "range_up",
+                    "x": [
+                        0,
+                        9
                     ],
                     "y_type": "directions",
                     "y": {

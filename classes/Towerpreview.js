@@ -2,7 +2,7 @@ import Building from "./Building.js"
 import Tile from "./Tile.js"
 
 export default class TowerPreview {
-    constructor(canvas, tower, background) {
+    constructor(canvas, tower, background, fps) {
         this.drawn = false
         this.canvas = canvas
         this.tower = tower
@@ -12,7 +12,8 @@ export default class TowerPreview {
         this.tiles = this.#generateTiles(this.background.tiles)
         this.canvas.width = this.background.width * this.tileSize
         this.canvas.height = this.background.height * this.tileSize
-        this.building = new Building(this.tileSize, this.tileSize, this.tower, this.tileSize)
+        this.building = new Building(this.tileSize, this.tileSize, this.tower, this.tileSize, fps)
+        this.fps = fps
     }
     #generateTiles(cf) {
         const tiles = []
@@ -21,6 +22,10 @@ export default class TowerPreview {
             tiles.push(new Tile(i % this.background.width * this.tileSize, Math.floor(i / this.background.height) * this.tileSize, this.tileSize, tile.images))
         }
         return tiles
+    }
+    updateFps(fps) {
+        this.fps = fps
+        this.building.updateFps(fps)
     }
     draw() {
         if (!this.drawn) {
