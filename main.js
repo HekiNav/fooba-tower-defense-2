@@ -94,7 +94,7 @@ async function getFile(filename) {
 }
 function update() {
     const prevTileSize = tileSize
-    const width = sidebar.classList.contains("open") ? 0.7 : 1
+    const width = sidebar.classList.contains("open") ? 1 : 1
     const step = 0.1
     const scale = 1
     tileSize = Math.floor((window.innerHeight * scale / map.height > window.innerWidth * width * scale / map.width ? window.innerWidth * width * scale / map.width : window.innerHeight * scale / map.height) / step) * step
