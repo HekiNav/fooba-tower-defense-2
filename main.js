@@ -2,6 +2,8 @@ import Building from "./classes/Building.js"
 import Enemy from "./classes/Enemy.js"
 import Tile from "./classes/Tile.js"
 import TowerPreview from "./classes/Towerpreview.js"
+
+
 const canvas = document.getElementById("canvas")
 const canvasC = document.getElementById("canvasC")
 const sidebar = document.getElementById("sidebar")
@@ -11,15 +13,12 @@ c.imageSmoothingDisabled = true
 
 const fps = 30;
 
-let mouse = {
-    offset: { x: 0, y: 0 },
-    down: false
-}
 let coins = 0
 let hp = 0
 const coinTXT = document.getElementById('coins')
 const hpTXT = document.getElementById('hp')
 let tileDraw = true
+let tempListeners = []
 
 let map = null
 let tiles = null
@@ -60,6 +59,7 @@ Promise.all([map1, bdings, enemData, waveData, ...previewBGs]).then(([map1, bdin
     canvas.addEventListener("mouseout", handleMouseOut)
     canvas.addEventListener("click", handleClick)
     document.getElementById("sidebarCloser").addEventListener("click", closeSideBar)
+    addKeyBinds()
 })
 
 function loadTiles(raw) {
@@ -93,6 +93,7 @@ async function getFile(filename) {
     return await response.json()
 }
 function update() {
+    const start = performance.now()
     const prevTileSize = tileSize
     const width = sidebar.classList.contains("open") ? 1 : 1
     const step = 0.1
@@ -130,12 +131,20 @@ function update() {
     })
     c.restore()
     previewImages.forEach(img => {
-        img.draw()
+        img.update()
     })
     enemies.forEach(e => e.updated = false)
-    setTimeout(() => {
+    const end = performance.now()
+    const currentFps = fpsCounter.tick();
+    document.getElementById("fpsCounter").innerText = currentFps + "/" + fps
+    if (fps < 60) {
+        setTimeout(() => {
+            window.requestAnimationFrame(update);
+        }, 1000 / fps - (end - start) - 5);
+    } else {
         window.requestAnimationFrame(update);
-    }, 1000 / fps);
+    }
+
 }
 
 
@@ -159,8 +168,8 @@ function handleClick(e) {
 function handleMouseOut(e) {
     tiles.forEach((tile) => { tile.hovered = false; })
 }
-function buildSideBar(activeTile) {
-    clearSideBar()
+function buildSideBar(activeTile, preserveSelected) {
+    clearSideBar(preserveSelected)
     openSideBar()
     let options = buildable.filter(b => b.levels[activeTile.level])
     const currentBuilding = activeTile.tower ? buildable[Number(activeTile.tower.source.img.source.url.split("/")[2][5]) - 1] : null
@@ -173,10 +182,12 @@ function buildSideBar(activeTile) {
         const t = activeTile.tower.source
 
         const container = document.createElement("div")
-        container.classList.add("tower-option-current")
+        container.classList.add("tower-option")
         container.innerHTML = `
-        <span class="topt-header"> ${t.name} (Lvl ${level})</span>
+            <span class="topt-header">${t.name} (Lvl ${level + 1})</span><br>
             <span class="topt-desc">${t.desc}</span>
+            <div class="topt-current-container">
+            
             <span class="topt-piercing">${t.shieldPiercing ? '<img src="./img/icons/shield-pierce.svg" title="Tower is Shield Piercing" alt="Shield Piercing" class="topt-pierce-icon">' : ""} ${t.armorPiercing ? '<img src="./img/icons/armor-pierce.svg" title="Tower is Armor Piercing" alt="Armor Piercing" class="topt-pierce-icon">' : ""}</span>
             <div class="topt-stats">
                 <span class="topt-stats-header">Stats</span>
@@ -190,12 +201,13 @@ function buildSideBar(activeTile) {
                 <span class="topt-stat" title="Health damage"><img src="./img/icons/hearts.svg" alt="Heath: " class="topt-stat-icon">${t.damage.health}</span>
                 <span class="topt-stat" title="Armor damage"><img src="./img/icons/armor.svg" alt="Armor: " class="topt-stat-icon">${t.damage.armor}</span>
                 <span class="topt-stat" title="Shield damage"><img src="./img/icons/shield.svg"  alt="Shield: " class="topt-stat-icon">${t.damage.shield}</span>
+            </div>
             </div>`
         sidebar.appendChild(container)
     }
     sidebar.innerHTML += `<span class="sidebar-header">Available Towers</span>`
-    options.forEach(opt => {
-        const element = towerOption(opt, activeTile.level)
+    options.forEach((opt, i) => {
+        const element = towerOption(opt, activeTile.level, i)
         sidebar.appendChild(element)
 
         const background = Math.floor(Math.random() * previewBackgrounds.length)
@@ -209,23 +221,39 @@ function buildSideBar(activeTile) {
             clearSideBar()
             buildSideBar(activeTile)
         })
+        const listenToKeyDown = (e) => {
+            console.log("templistener")
+            console.log(i)
+            if (e.code != "Digit" + (i + 1)) return
+            const building = new Building(activeTile.x, activeTile.y, opt.levels[activeTile.level], tileSize, fps)
+            activeTile.level++
+            activeTile.tower = building
+            activeTile.tower.source.name = opt.name
+            clearSideBar(true)
+            buildSideBar(activeTile, true)
+        };
+        tempListeners.push(['keydown', listenToKeyDown])
+        window.addEventListener('keydown', listenToKeyDown)
         previewImages.push(image)
     })
 
 }
-function clearSideBar() {
+function clearSideBar(preserveSelected) {
+    tempListeners.forEach(l => window.removeEventListener(...l))
     sidebar.innerHTML = ""
     previewImages = []
-    closeSideBar()
+    closeSideBar(preserveSelected)
 }
-function towerOption(tower, level) {
+
+function towerOption(tower, level, i) {
     const t = tower.levels[level]
     const container = document.createElement("div")
     container.classList.add("tower-option")
     container.innerHTML = `
-            <span class="topt-header">${tower.name} (Lvl ${level + 1})</span>
+            <span class="topt-header">${tower.name} (Lvl ${level + 1})</span><br>
             <span class="topt-desc">${t.desc}</span>
-            <canvas class="topt-img"></canvas>
+            <div class="topt-container">
+<div class="topt-img-container"><canvas class="topt-img"></canvas></div>
             <span class="topt-cost"> <svg class="topt-price-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                 <path fill="yellow" fill-rule="evenodd"
                     d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-1.902 7.098a3.75 3.75 0 013.903-.884.75.75 0 10.498-1.415A5.25 5.25 0 008.005 9.75H7.5a.75.75 0 000 1.5h.054a5.281 5.281 0 000 1.5H7.5a.75.75 0 000 1.5h.505a5.25 5.25 0 006.494 2.701.75.75 0 00-.498-1.415 3.75 3.75 0 01-4.252-1.286h3.001a.75.75 0 000-1.5H9.075a3.77 3.77 0 010-1.5h3.675a.75.75 0 000-1.5h-3c.105-.14.221-.274.348-.402z"
@@ -247,15 +275,16 @@ function towerOption(tower, level) {
                 <span class="topt-stat" title="Armor damage"><img src="./img/icons/armor.svg" alt="Armor: " class="topt-stat-icon">${t.damage.armor}</span>
                 <span class="topt-stat" title="Shield damage"><img src="./img/icons/shield.svg"  alt="Shield: " class="topt-stat-icon">${t.damage.shield}</span>
             </div>
-            <button class="topt-build">${level == 0 ? "Build" : "Upgrade"}</button>`
+            <button class="topt-build">${level == 0 ? `Build (${i + 1})` : `Upgrade (${i + 1})`}</button>
+            </div>`
 
     return container
 }
-function closeSideBar() {
+function closeSideBar(preserveSelected = false) {
     if (!sidebar.classList.contains("open")) return
     sidebar.classList.remove("open")
     document.getElementById("sidebarCloser").classList.remove("active")
-    tiles.forEach(t => t.selected = false)
+    if (!preserveSelected) tiles.forEach(t => t.selected = false)
 }
 function openSideBar() {
     if (sidebar.classList.contains("open")) return
@@ -269,4 +298,92 @@ function updateHp(amount) {
 function updateCoins(amount) {
     coins += amount
     coinTXT.innerHTML = coins
+}
+const fpsCounter = {
+    sampleSize: 10,
+    value: 0,
+    _sample_: [],
+    _index_: 0,
+    _lastTick_: false,
+    tick: function () {
+        // if is first tick, just set tick timestamp and return
+        if (!this._lastTick_) {
+            this._lastTick_ = performance.now();
+            return 0;
+        }
+        // calculate necessary values to obtain current tick FPS
+        let now = performance.now();
+        let delta = (now - this._lastTick_) / 1000;
+        let fps = 1 / delta;
+        // add to fps samples, current tick fps value 
+        this._sample_[this._index_] = Math.round(fps);
+
+        // iterate samples to obtain the average
+        let average = 0;
+        for (let i = 0; i < this._sample_.length; i++) average += this._sample_[i];
+
+        average = Math.round(average / this._sample_.length);
+
+        // set new FPS
+        this.value = average;
+        // store current timestamp
+        this._lastTick_ = now;
+        // increase sample index counter, and reset it
+        // to 0 if exceded maximum sampleSize limit
+        this._index_++;
+        if (this._index_ === this.sampleSize) this._index_ = 0;
+        return this.value;
+    }
+}
+function addKeyBinds() {
+    const eventWhitelist = [
+        "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Enter",
+    ]
+    window.addEventListener("keydown", e => {
+        console.log(e.code)
+        switch (e.code) {
+            case "Escape":
+                clearSideBar(true)
+                break;
+            case "Enter":
+                tiles.forEach(tile => tile.selected = false)
+                const tile = tiles[Math.round(tiles.length / 2 + map.width / 2/*  + i * (!(i % 2) ? 1 : -1) */)]
+
+                tile.selected = true
+
+                break;
+            case "ArrowUp":
+                let tileI = tiles.findIndex(t => t.selected)
+                if (tileI < 0) break
+                tiles[tileI].selected = false
+                if (tiles[tileI - map.width]) tiles[tileI - map.width].selected = true
+                break;
+            case "ArrowDown":
+                let tileI2 = tiles.findIndex(t => t.selected)
+                if (tileI2 < 0) break
+                tiles[tileI2].selected = false
+                if (tiles[tileI2 - -map.width]) tiles[tileI2 - -map.width].selected = true
+                break;
+            case "ArrowLeft":
+                let tileI3 = tiles.findIndex(t => t.selected)
+                if (tileI3 < 0) break
+                tiles[tileI3].selected = false
+                if (tiles[tileI3 - 1]) tiles[tileI3 - 1].selected = true
+                break;
+            case "ArrowRight":
+                let tileI4 = tiles.findIndex(t => t.selected)
+                if (tileI4 < 0) break
+                tiles[tileI4].selected = false
+                if (tiles[tileI4 + 1]) tiles[tileI4 + 1].selected = true
+                break;
+            default:
+                break;
+        }
+        if (tiles.some(t => t.selected && t.building) && eventWhitelist.find(ev => ev == e.code)) {
+            const activeTile = tiles.find(t => t.selected && t.building)
+            buildSideBar(activeTile, true)
+        } else if ((e.code == "Escape" || e.code == "KeyE") || !tiles.some(t => t.selected && t.building)) {
+            clearSideBar(true)
+        }
+    })
 }

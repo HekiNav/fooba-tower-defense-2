@@ -72,7 +72,6 @@ export default class Enemy extends Sprite {
         this.tileSize = tileSize
         this.width = this.tileSize * this.source.width * this.sizeMultiplier
         this.height = this.tileSize * this.source.height * this.sizeMultiplier
-        console.log(this.xPos, this.width, this.tileSize, this.yPos, this.height)
         super.updateSize(this.xPos - (this.width - this.tileSize) * 0.5, this.yPos - (this.height - this.tileSize) * 0.5, this.width, this.height)
     }
     bar(c, x, y, color, percent, width, height) {

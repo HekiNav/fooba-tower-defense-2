@@ -27,6 +27,19 @@ export default class TowerPreview {
         this.fps = fps
         this.building.updateFps(fps)
     }
+    update() {
+        const step = 0.1
+        const scale = 1
+        const width = this.canvas.parentNode.offsetWidth
+        const height = this.canvas.parentNode.offsetHeight
+        const tileSize = Math.floor((height * scale / 3 > width * scale / 3 ? height * scale / 3 : width * scale / 3) / step) * step
+        if (tileSize != this.tileSize) {
+            this.drawn = false
+            this.canvas.width = this.background.width * this.tileSize
+            this.canvas.height = this.background.height * this.tileSize
+        }
+        this.draw()
+    }
     draw() {
         if (!this.drawn) {
             this.drawn = true

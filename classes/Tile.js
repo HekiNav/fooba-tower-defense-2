@@ -18,6 +18,9 @@ export default class Tile {
             })
         });
     }
+    updateFps(fps) {
+        if (this.tower) this.tower.updateFps(fps)
+    }
     updateSize(x, y, size) {
         this.x = x
         this.y = y
@@ -43,6 +46,12 @@ export default class Tile {
             c.drawImage(img.image, img.imagesrc.x * img.imagesrc.size, img.imagesrc.y * img.imagesrc.size, img.imagesrc.size, img.imagesrc.size, this.x - scaleOffset * 0.5, this.y - scaleOffset * 0.5, this.size * scaleOffset, this.size * scaleOffset)
         })
         if (this.selected && this.building) {
+            c.strokeStyle = "#0005"
+            c.lineWidth = 8
+            c.beginPath()
+            c.rect(this.x + 2, this.y + 2, this.size - 6, this.size - 6)
+            c.stroke()
+        } else if (this.selected) {
             c.strokeStyle = "#0005"
             c.lineWidth = 4
             c.beginPath()

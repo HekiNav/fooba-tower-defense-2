@@ -27,6 +27,18 @@ body {
     flex-grow: 1;
 }
 
+#fpsCounter {
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 20px;
+    color: white;
+}
+
+#fpsCounter::before {
+    content: "FPS: ";
+}
+
 .uiText {
     position: absolute;
     top: 0;
@@ -56,6 +68,7 @@ body {
 
 .close-sidebar {
     position: absolute;
+    z-index: 1001;
     right: 18px;
     top: 18px;
     width: 32px;
@@ -97,6 +110,7 @@ body {
     right: -31vw;
     background-color: #006122;
     transition: 0.3s ease-in-out;
+    z-index: 100;
 }
 
 #sidebar.open {
@@ -111,58 +125,58 @@ body {
 }
 
 .tower-option {
-    display: grid;
     background-color: #333;
     border: #00290e 3px outset;
     margin: 10px;
     padding: 10px;
     color: white;
+
+}
+
+.topt-container {
+    display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 0.7fr 1fr 3fr 1fr;
+    grid-template-rows: 1fr 3fr 1fr;
     grid-template-areas:
-        "header header header"
-        "desc desc desc"
         "price price piercing"
         "stats stats2 image"
         "build build build";
 }
 
-.tower-option-current {
+.topt-current-container {
     display: grid;
-    background-color: #333;
-    border: #00290e 3px outset;
-    margin: 10px;
-    padding: 10px;
-    color: white;
-    grid-template-columns: 4fr 4fr 1fr;
-    grid-template-rows: 1fr 1fr 3fr;
+    align-content: baseline;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
     grid-template-areas:
-        "header header header"
-        "desc desc desc"
         "stats stats2 piercing";
 }
 
+div {
+    display: block;
+}
+
 .topt-header {
-    font-size: 30px;
-    grid-area: header;
+    font-size: 1.8rem;
 }
 
 .topt-desc {
     color: #00bd42;
-    font-size: 14px;
-    grid-area: desc;
+    font-size: 1rem;
+    display: block;
+    margin: 0.3rem 0;
 }
 
 .topt-cost {
     display: flex;
     align-items: center;
     height: min-content;
-    font-size: 16px;
+    font-size: 1.6rem;
     grid-area: price;
 }
 
 .topt-price-icon {
-    height: 22px;
+    height: 1.8rem;
     margin-right: 2px;
 }
 
@@ -170,13 +184,13 @@ body {
     display: flex;
     align-items: center;
     height: min-content;
-    font-size: 14px;
+    font-size: 1rem;
     grid-area: piercing;
 }
 
 .topt-pierce-icon {
-    height: 20px;
-    margin-right: 2px;
+    height: 1.5rem;
+    margin-right: 0.2rem;
 }
 
 .topt-stats {
@@ -195,27 +209,35 @@ body {
 
 .topt-stats-header {
     color: #00bd42;
-    font-size: 14px;
+    font-size: 0.7rem;
+}
+
+.topt-img-container {
+    grid-area: image;
+    display: flex;
+    padding: 0.2rem;
 }
 
 .topt-img {
-    grid-area: image;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 1;
 }
 
 .topt-stats-2 .topt-stat-icon {
-    height: 18px;
+    height: 1.2rem;
 }
 
 .topt-stat {
-    font-size: 20px;
+    font-size: 1rem;
     display: flex;
     align-items: center;
-    margin: 1px 0;
+    margin: 0.1rem 0;
 }
 
 .topt-stat-icon {
-    height: 20px;
-    margin-right: 2px;
+    height: 1.3rem;
+    margin-right: 0.2rem;
 }
 
 .topt-build {
@@ -223,7 +245,7 @@ body {
     width: 100%;
     background-color: #00bd42;
     color: white;
-    font-size: 20px;
+    font-size: 1.5rem;
     border: #006122 3px inset;
 }
 
