@@ -2,6 +2,7 @@ import Building from "./classes/Building.js"
 import Enemy from "./classes/Enemy.js"
 import Tile from "./classes/Tile.js"
 import TowerPreview from "./classes/Towerpreview.js"
+import Waves from "./classes/Wave.js"
 
 
 const canvas = document.getElementById("canvas")
@@ -24,6 +25,7 @@ let map = null
 let tiles = null
 let buildable = []
 let enemies = []
+let waves = null
 let enemyTypes = []
 let previewBackgrounds = []
 let previewImages = []
@@ -41,19 +43,38 @@ const previewBGs = [
 ]
 updateCoins(50)
 updateHp(100)
-Promise.all([map1, bdings, enemData, waveData, ...previewBGs]).then(([map1, bdings, enemData, waves, ...previewBGs]) => {
+Promise.all([map1, bdings, enemData, waveData, ...previewBGs]).then(([map1, bdings, enemData, waveD, ...previewBGs]) => {
     tiles = loadTiles(map1.tiles)
     map = map1
     enemyTypes = enemData
     buildable = bdings
     previewBackgrounds = previewBGs
+    waves = new Waves(waveD, enemyTypes, fps)
+
+    waves.onDone(() => {
+        alert("YOU WIN")
+    })
+    waves.onEnemy(e => {
+        enemies.push(
+            new Enemy(
+                e,
+                map.enemyPath,
+                tileSize,
+                fps,
+                enemy => {
+                    console.log(enemy.ticks, enemies.map(en => en.ticks), enemies.findIndex(en => en.ticks == enemy.ticks))
+                    enemies.splice(enemies.findIndex(en => en.ticks == enemy.ticks), 1)
+                },
+                updateCoins,
+                updateHp
+            )
+        )
+    })
+
     update()
     tiles.forEach(tile => {
         tile.update(c, true, enemies)
     })
-    waves = waves
-
-    enemies.push(new Enemy(enemyTypes[Math.floor(Math.random() * enemyTypes.length)], map1.enemyPath, tileSize, fps, (e) => enemies.splice(enemies.findIndex(en => en.xPos == e.xPos && en.yPos == e.yPos), 1), updateCoins, updateHp))
 
     canvas.addEventListener("mousemove", handleMouseMove)
     canvas.addEventListener("mouseout", handleMouseOut)
@@ -133,9 +154,15 @@ function update() {
     previewImages.forEach(img => {
         img.update()
     })
+    if (waves.done && enemies.length == 0) waves.nextWave()
+    if (waves) waves.update()
+
     enemies.forEach(e => e.updated = false)
+
+
     const end = performance.now()
     const currentFps = fpsCounter.tick();
+
     document.getElementById("fpsCounter").innerText = currentFps + "/" + fps
     if (fps < 60) {
         setTimeout(() => {

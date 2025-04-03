@@ -2,14 +2,23 @@
     [
         {
             "type": "set",
-            "values": [
-                {
-                    "amount": 3,
-                    "id": "leafbug",
-                    "interval": "500",
-                    "delay": 0
-                }
-            ]
+            "amount": 3,
+            "id": "leafbug",
+            "interval": [
+                2000
+            ],
+            "delay": 0
+        }
+    ],
+    [
+        {
+            "type": "set",
+            "amount": 5,
+            "id": "scorpion",
+            "interval": [
+                1000
+            ],
+            "delay": 0
         }
     ]
 ]
